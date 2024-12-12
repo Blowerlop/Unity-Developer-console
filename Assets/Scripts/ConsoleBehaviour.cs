@@ -19,16 +19,16 @@ namespace DevelopperConsole
         #region Variables
 
         // Console State
-        public bool isConsoleEnabled => _canvas.activeSelf;
-        public bool isInputFieldFocus => _inputInputField != null && _inputInputField.isFocused;
+        private bool isConsoleEnabled => _canvas.activeSelf;
+        private bool isInputFieldFocus => _inputInputField != null && _inputInputField.isFocused;
         private int _currentNumberOfMessages;
 
         [Header("Parameters")]
-        [SerializeField] private Vector2 _fontSizeRange = new Vector2(20, 60);
+        [SerializeField] private Vector2 _fontSizeRange = new(20, 60);
         [SerializeField] private int _maxMessages = 100;
         [SerializeField] private int _maxCommandHistory = 50;
         
-        public readonly Dictionary<string, ConsoleCommand> commands = new Dictionary<string, ConsoleCommand>();
+        public readonly Dictionary<string, ConsoleCommand> commands = new();
         public string[] commandsName { get; private set; }
         private List<string> _commandHistory;
         private int _commandHistoryIndex;
