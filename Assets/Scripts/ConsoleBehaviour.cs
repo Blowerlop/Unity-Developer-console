@@ -19,7 +19,7 @@ namespace DevelopperConsole
         #region Variables
 
         // Console State
-        private bool isConsoleEnabled => _canvas.activeSelf;
+        public bool isConsoleEnabled => _canvas.activeSelf;
         private bool isInputFieldFocus => _inputInputField != null && _inputInputField.isFocused;
         private int _currentNumberOfMessages;
 
@@ -41,12 +41,12 @@ namespace DevelopperConsole
         [SerializeField] private TMP_InputField _inputInputField;
         [SerializeField] private ConsoleCommandPrediction _commandPrediction;
 
-        [SerializeField] private InputAction _inputAction;
-
         [SerializeField, ColorUsage(false)] private Color _logColor;
         [SerializeField, ColorUsage(false)] private Color _logWarningColor;
         [SerializeField, ColorUsage(false)] private Color _logErrorColor;
-        
+
+        public Action OnShowEvent;
+        public Action OnHideEvent;
 
         #endregion
         
@@ -76,9 +76,6 @@ namespace DevelopperConsole
             
             HideForced();
             ClearInputField();
-            
-            _inputAction.started += OnConsoleKeyStarted_ToggleConsole;
-            _inputAction.Enable();
         }
 
         private void OnEnable()
@@ -96,8 +93,6 @@ namespace DevelopperConsole
         private void OnDestroy()
         {
             Application.logMessageReceived -= LogConsole;
-
-            _inputAction.started -= OnConsoleKeyStarted_ToggleConsole;
         }
 
         private void Update()
@@ -290,7 +285,7 @@ namespace DevelopperConsole
         #endregion
         
         #region Used by shortcut
-        private void OnConsoleKeyStarted_ToggleConsole(InputAction.CallbackContext _)
+        public void ToggleConsole()
         {
             if (isConsoleEnabled) Hide();
             else Show();
@@ -351,7 +346,6 @@ namespace DevelopperConsole
         private void AutoCompleteTextWithThePrediction()
         {
             SetTextOfInputInputField(_commandPrediction.currentPrediction);
-            // ClearCommandPrediction();
         }
         #endregion
         
@@ -404,16 +398,18 @@ namespace DevelopperConsole
             ShowForced();
         }
 
-        private static void ShowForced()
+        private void ShowForced()
         {
-            instance._canvas.SetActive(true);
+            _canvas.SetActive(true);
 
-            instance.OnShow();
+            OnShow();
         }
 
         private void OnShow()
         {
-            instance.FocusOnInputField();
+            FocusOnInputField();
+            
+            OnShowEvent?.Invoke();
         }
 
         public void Hide()
@@ -432,6 +428,7 @@ namespace DevelopperConsole
 
         private void OnHideConsole()
         {
+            OnHideEvent?.Invoke();
         }
         
         private void LogConsole(string condition, string stacktrace, LogType logType)
