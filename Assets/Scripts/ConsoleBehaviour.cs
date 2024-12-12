@@ -14,7 +14,7 @@ using UnityEngine.UI;
 namespace DevelopperConsole
 {
     [DefaultExecutionOrder(-1)]
-    public class Console : MonoSingleton<Console>
+    public class ConsoleBehaviour : MonoSingleton<ConsoleBehaviour>
     {
         #region Variables
 
@@ -55,7 +55,7 @@ namespace DevelopperConsole
 
         protected override void Awake()
         {
-            ClearConsoleLogs();
+            ClearLogs();
             Application.logMessageReceived += LogConsole;
             RetrieveCommandAttribute();
         }
@@ -74,7 +74,7 @@ namespace DevelopperConsole
 
             _commandHistory = new List<string>(_maxCommandHistory);
             
-            HideConsoleForced();
+            HideForced();
             ClearInputField();
             
             _inputAction.started += OnConsoleKeyStarted_ToggleConsole;
@@ -156,7 +156,7 @@ namespace DevelopperConsole
 
         #region Methods
 
-        #region  Command Relative
+        #region Command Relative
 
         private void ExecuteCommand(string rawInput)
         {
@@ -292,8 +292,8 @@ namespace DevelopperConsole
         #region Used by shortcut
         private void OnConsoleKeyStarted_ToggleConsole(InputAction.CallbackContext _)
         {
-            if (isConsoleEnabled) HideConsole();
-            else ShowConsole();
+            if (isConsoleEnabled) Hide();
+            else Show();
         }
         
         private void GotToTheOlderInHistory()
@@ -397,61 +397,33 @@ namespace DevelopperConsole
         
         #endregion
 
-        #region Custom Commands
-        [ConsoleCommand("clear", "Wipe all the logs in the console")]
-        private static void ClearConsoleLogs()
+        public void Show()
         {
-            Debug.Log("Console cleared");
-            instance._logInputField.text = string.Empty;
-            instance._currentNumberOfMessages = 0;
+            if (isConsoleEnabled) return;
+
+            ShowForced();
         }
 
-        [ConsoleCommand(new string[] {"help", "commands"}, "Display all the commands")]
-        private static void DisplayAllCommands()
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.Append("Here the list of all available commands :\n");
-
-            foreach (var kvp in instance.commands)
-            {
-                stringBuilder.Append($"{kvp.Key} --- {kvp.Value.description}\n");
-            }
-            
-            instance.LogConsole(stringBuilder.ToString(), string.Empty, LogType.Log);
-        }
-        #endregion
-        
-        [ConsoleCommand("enable", "Enable the console")]
-        public static void ShowConsole()
-        {
-            // if (isConsoleEnabled) return;
-
-            ShowConsoleForced();
-        }
-
-        private static void ShowConsoleForced()
+        private static void ShowForced()
         {
             instance._canvas.SetActive(true);
-            // isConsoleEnabled = true;
 
-            instance.OnShowConsole();
+            instance.OnShow();
         }
 
-        private void OnShowConsole()
+        private void OnShow()
         {
             instance.FocusOnInputField();
         }
 
-        [ConsoleCommand("disable", "Disable the console")]
-        public static void HideConsole()
+        public void Hide()
         {
-            // if (isConsoleEnabled == false) return;
+            if (isConsoleEnabled == false) return;
             
-            HideConsoleForced();
+            HideForced();
         }
 
-        private static void HideConsoleForced()
+        private void HideForced()
         {
             instance._canvas.SetActive(false);
 
@@ -493,6 +465,13 @@ namespace DevelopperConsole
             {
                 _currentNumberOfMessages++;
             }
+        }
+        
+        public void ClearLogs()
+        {
+            Debug.Log("Console cleared");
+            _logInputField.text = string.Empty;
+            _currentNumberOfMessages = 0;
         }
 
         

@@ -33,13 +33,13 @@ namespace DevelopperConsole
 
             HashSet<string> allCommandsName = new HashSet<string>();
 
-            for (int i = 0; i < Console.instance.commandsName.Length; i++)
+            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
             {
-                string commandName = Console.instance.commandsName[i];
+                string commandName = ConsoleBehaviour.instance.commandsName[i];
                 
                 if (commandName.StartsWith(commandInput, true, CultureInfo.InvariantCulture))
                 {
-                    allCommandsName.Add(Console.instance.commandsName[i]);
+                    allCommandsName.Add(ConsoleBehaviour.instance.commandsName[i]);
                 }
                 
             }
@@ -81,11 +81,11 @@ namespace DevelopperConsole
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{preWriteCommandName}</color>{nonWriteCommandName}";
             }
 
-            for (int i = 0; i < Console.instance.commands[currentPrediction].parametersInfo.Length; i++)
+            for (int i = 0; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
             {
                 if (splitInput.Count > i + 1) continue;
 
-                ParameterInfo parameterInfo = Console.instance.commands[currentPrediction].parametersInfo[i];
+                ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
                 if (parameterInfo.HasDefaultValue)
                 {
                     // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>(Optional)";
@@ -107,10 +107,10 @@ namespace DevelopperConsole
                 Button instance = Instantiate(_template, _gameObject.transform);
                 instance.onClick.AddListener(() =>
                 {
-                    Console.instance.SetTextOfInputInputFieldSilent(predictionsName);
+                    ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictionsName);
                     ComputeFirstPrediction(predictionsName, predictionsName, predictionsName,
                         new[] { predictionsName });
-                    Console.instance.FocusOnInputField();
+                    ConsoleBehaviour.instance.FocusOnInputField();
                 });
                 instance.GetComponentInChildren<TMP_Text>().text = predictionsName;
             }
