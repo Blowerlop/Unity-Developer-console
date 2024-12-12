@@ -52,5 +52,10 @@ namespace DevelopperConsole
                 }
             }
         }
+        
+        public override string ToString()
+        {
+            return $"{name} : {description}";
+        }
     }
 }
