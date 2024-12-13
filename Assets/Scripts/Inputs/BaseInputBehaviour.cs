@@ -32,6 +32,15 @@ namespace DeveloperConsole.Inputs
             _inputAction.performed -= Callback;
         }
 
+        public void Init()
+        {
+            OnInit();
+        }
+
+        protected virtual void OnInit()
+        {
+        }
+
         protected abstract void Callback(InputAction.CallbackContext context);
     }
 }

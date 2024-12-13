@@ -1308,6 +1308,7 @@ MonoBehaviour:
   - rid: 7460716656807641093
   - rid: 7460716656807641094
   - rid: 7460716656807641095
+  - rid: 7460716656807641096
   references:
     version: 2
     RefIds:
@@ -1439,6 +1440,26 @@ MonoBehaviour:
             m_Groups: 
             m_Action: Input
             m_Flags: 8
+          m_Flags: 0
+    - rid: 7460716656807641096
+      type: {class: CompleteCommandPredictionInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 1
+          m_ExpectedControlType: Button
+          m_Id: 99068f10-5024-4ce1-a4b3-6eab57c9b543
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 
+            m_Id: 3993100f-1160-4cdf-b757-b309aaa2cc04
+            m_Path: <Keyboard>/tab
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 0
           m_Flags: 0
 --- !u!1 &2711934960833532717
 GameObject:

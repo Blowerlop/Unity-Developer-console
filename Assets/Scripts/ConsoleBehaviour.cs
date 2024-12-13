@@ -91,20 +91,6 @@ namespace DeveloperConsole
             Application.logMessageReceived -= LogConsole;
         }
 
-        private void Update()
-        {
-            // InputField Related
-            if (isInputFieldFocus == false) return;
-            
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if (_commandPrediction.HasAPrediction())
-                {
-                    AutoCompleteTextWithThePrediction();
-                }
-            }
-        }
-
         #endregion
 
 
@@ -250,10 +236,6 @@ namespace DeveloperConsole
             else Show();
         }
         
-        private void AutoCompleteTextWithThePrediction()
-        {
-            SetTextOfInputInputField(_commandPrediction.currentPrediction);
-        }
         #endregion
         
         #region Utilities

@@ -14,13 +14,14 @@ namespace DeveloperConsole
         {
             foreach (var input in _persistantInputs)
             {
+                input.Init();
                 input.RegisterListener();
-                
                 input.Enable();
             }
             
             foreach (var input in _nonPersistantInputs)
             {
+                input.Init();
                 input.RegisterListener();
             }
             
@@ -33,7 +34,6 @@ namespace DeveloperConsole
             foreach (var input in _persistantInputs)
             {
                 input.UnRegisterListener();
-                
                 input.Disable();
             }
             
