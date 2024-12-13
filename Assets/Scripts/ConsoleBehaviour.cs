@@ -23,12 +23,15 @@ namespace DeveloperConsole
         [Header("Parameters")]
         [SerializeField] private int _maxMessages = 100;
         [SerializeField] private int _maxCommandHistory = 50;
+        [SerializeField, ColorUsage(false)] private Color _logColor;
+        [SerializeField, ColorUsage(false)] private Color _logWarningColor;
+        [SerializeField, ColorUsage(false)] private Color _logErrorColor;
         
         public readonly Dictionary<string, ConsoleCommand> commands = new();
         public string[] commandsName { get; private set; }
         public List<string> commandHistory { get; private set; }
         private int _commandHistoryIndex;
-        public int currentHistoryIndex = -1;
+        [NonSerialized] public int currentHistoryIndex = -1;
         
         [Header("References")]
         [SerializeField] private GameObject _canvas;
@@ -36,13 +39,10 @@ namespace DeveloperConsole
         [field: SerializeField] public TMP_InputField logInputField { get; private set; }
         [field: SerializeField] public TMP_InputField inputInputField { get; private set; }
         [SerializeField] private ConsoleCommandPrediction _commandPrediction;
-
-        [SerializeField, ColorUsage(false)] private Color _logColor;
-        [SerializeField, ColorUsage(false)] private Color _logWarningColor;
-        [SerializeField, ColorUsage(false)] private Color _logErrorColor;
-
-        public Action OnShowEvent;
-        public Action OnHideEvent;
+        
+        // Events
+        public Action onShowEvent;
+        public Action onHideEvent;
 
         #endregion
         
@@ -279,7 +279,7 @@ namespace DeveloperConsole
         {
             FocusOnInputField();
             
-            OnShowEvent?.Invoke();
+            onShowEvent?.Invoke();
         }
 
         public void Hide()
@@ -298,7 +298,7 @@ namespace DeveloperConsole
 
         private void OnHideConsole()
         {
-            OnHideEvent?.Invoke();
+            onHideEvent?.Invoke();
         }
         
         private void LogConsole(string condition, string stacktrace, LogType logType)

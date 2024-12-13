@@ -25,8 +25,8 @@ namespace DeveloperConsole
                 input.RegisterListener();
             }
             
-            ConsoleBehaviour.instance.OnShowEvent += OnConsoleShow;
-            ConsoleBehaviour.instance.OnHideEvent += OnConsoleHide;
+            ConsoleBehaviour.instance.onShowEvent += OnConsoleShow;
+            ConsoleBehaviour.instance.onHideEvent += OnConsoleHide;
         }
         
         private void OnDestroy()
@@ -42,8 +42,8 @@ namespace DeveloperConsole
                 input.UnRegisterListener();
             }
             
-            ConsoleBehaviour.instance.OnShowEvent -= OnConsoleShow;
-            ConsoleBehaviour.instance.OnHideEvent -= OnConsoleHide;
+            ConsoleBehaviour.instance.onShowEvent -= OnConsoleShow;
+            ConsoleBehaviour.instance.onHideEvent -= OnConsoleHide;
         }
         
         private void OnConsoleShow()
