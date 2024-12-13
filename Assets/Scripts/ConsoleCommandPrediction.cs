@@ -19,6 +19,9 @@ namespace DeveloperConsole
         [SerializeField] private GameObject _gameObject;
         [SerializeField] private Button _template;
 
+        public event Action<ConsoleCommand, int> onPredict;
+        public event Action onStopPredict;
+
 
         private void OnEnable()
         {
@@ -91,10 +94,8 @@ namespace DeveloperConsole
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{preWriteCommandName}</color>{nonWriteCommandName}";
             }
 
-            for (int i = 0; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
+            for (int i = splitInput.Count - 1; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
             {
-                if (splitInput.Count > i + 1) continue;
-
                 ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
                 if (parameterInfo.HasDefaultValue)
                 {
@@ -106,17 +107,9 @@ namespace DeveloperConsole
                     // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>";
                     _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}";
                 }
-                
-                var parameterResolverAttribute = parameterInfo.GetCustomAttribute<ParameterResolverAttribute>();
-                if (parameterResolverAttribute != null)
-                {
-                    string[] resolve = parameterResolverAttribute.Resolve();
-                    foreach (string s in resolve)
-                    {
-                        Debug.Log(s);
-                    }
-                }
             }
+            
+            onPredict?.Invoke(ConsoleBehaviour.instance.commands[currentPrediction], splitInput.Count - 1);
         }
 
         
@@ -143,6 +136,7 @@ namespace DeveloperConsole
             currentPrediction = null;
             _inputFieldPredictionPlaceHolder.text = string.Empty;
             _gameObject.DestroyChildren();
+            onStopPredict?.Invoke();
         }
     }
 }

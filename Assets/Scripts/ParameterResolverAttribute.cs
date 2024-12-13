@@ -6,16 +6,34 @@ namespace DeveloperConsole
     [AttributeUsage(AttributeTargets.Parameter)]
     public class ParameterResolverAttribute : Attribute
     {
-        private Type _enumT;    
+        private Func<string[]> _func;    
         
-        public ParameterResolverAttribute(Type enumT)
+        
+        public ParameterResolverAttribute(Type targetType, string targetMethodName)
         {
-            _enumT = enumT;
+            _func = () => (string[]) targetType.GetMethod(targetMethodName)?.Invoke(null, null);
+        }
+
+        public ParameterResolverAttribute(Type type)
+        {
+            GenerateFuncByType(type);
+        }
+
+        private void GenerateFuncByType(Type type)
+        {
+            if (type.IsEnum)
+            {
+                _func = () => Enum.GetNames(type);
+            }
+            else
+            {
+                Debug.LogError($"{type.Name} is not supported. Cannot generate function");
+            }
         }
 
         public string[] Resolve()
         {
-            return Enum.GetNames(_enumT);
+            return _func.Invoke();
         }
     }
 }
