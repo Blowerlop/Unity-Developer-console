@@ -1,7 +1,7 @@
 using System.Text;
 using UnityEngine;
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     public static class ConsoleNativeCommands
     {

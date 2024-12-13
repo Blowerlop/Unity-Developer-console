@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace DevelopperConsole
+namespace DeveloperConsole.Inputs
 {
     [Serializable]
     public class LogResizeInputBehaviour : BaseInputBehaviour

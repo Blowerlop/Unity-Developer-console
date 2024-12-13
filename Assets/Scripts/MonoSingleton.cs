@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {

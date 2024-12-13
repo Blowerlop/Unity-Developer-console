@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using DeveloperConsole.Inputs;
+using UnityEngine;
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     public class ConsoleInputs : MonoBehaviour
     {

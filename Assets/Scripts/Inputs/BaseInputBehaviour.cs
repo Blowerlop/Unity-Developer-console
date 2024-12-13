@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DevelopperConsole
+namespace DeveloperConsole.Inputs
 {
     [Serializable]
     public abstract class BaseInputBehaviour

@@ -1,6 +1,6 @@
 using System;
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     /// <summary>
     /// This Attribute only works on static method

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Project
+namespace DeveloperConsole
 {
     public class DraggableWindow : MonoBehaviour, IDragHandler
     {

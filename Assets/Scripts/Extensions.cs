@@ -1,8 +1,8 @@
-﻿namespace DevelopperConsole
+﻿namespace DeveloperConsole
 {
     namespace Extensions
     {
-        public static class GameObject
+        public static class GameObjectExtensions
         {
             public static void DestroyChildren(this UnityEngine.GameObject gameObject)
             {
@@ -10,7 +10,7 @@
             }
         }
     
-        public static class Transform
+        public static class TransformExtensions
         {
             public static void DestroyChildren(this UnityEngine.Transform transform)
             {

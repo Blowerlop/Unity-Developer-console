@@ -1,8 +1,7 @@
 ﻿using System;
-using DevelopperConsole;
 using UnityEngine.InputSystem;
 
-namespace Inputs
+namespace DeveloperConsole.Inputs
 {
     [Serializable]
     public class ToggleInputBehaviour : BaseInputBehaviour

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using DeveloperConsole.Extensions;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static DevelopperConsole.Extensions.GameObject;
 
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     public class ConsoleCommandPrediction : MonoBehaviour
     {

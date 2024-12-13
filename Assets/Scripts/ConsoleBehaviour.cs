@@ -5,11 +5,10 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     [DefaultExecutionOrder(-1)]
     public class ConsoleBehaviour : MonoSingleton<ConsoleBehaviour>

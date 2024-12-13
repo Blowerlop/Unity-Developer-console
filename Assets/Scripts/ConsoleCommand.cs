@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace DevelopperConsole
+namespace DeveloperConsole
 {
     [Serializable]
     public class ConsoleCommand

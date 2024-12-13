@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace _Project._200_Dev.UI
+namespace DeveloperConsole
 {
     public enum HandlerType
     {
