@@ -1266,6 +1266,7 @@ MonoBehaviour:
   _dontDestroyOnLoad: 1
   _maxMessages: 100
   _maxCommandHistory: 50
+  currentHistoryIndex: -1
   _canvas: {fileID: 332920929876778223}
   <logScrollRect>k__BackingField: {fileID: 2934192161782301022}
   <logInputField>k__BackingField: {fileID: 7075882152759586708}
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   _nonPersistantInputs:
   - rid: 7460716656807641093
   - rid: 7460716656807641094
+  - rid: 7460716656807641095
   references:
     version: 2
     RefIds:
@@ -1334,8 +1336,8 @@ MonoBehaviour:
       data:
         _inputAction:
           m_Name: Input
-          m_Type: 0
-          m_ExpectedControlType: 
+          m_Type: 1
+          m_ExpectedControlType: Button
           m_Id: 43150303-118e-407b-b167-cc1ed6b01b5d
           m_Processors: 
           m_Interactions: 
@@ -1371,8 +1373,8 @@ MonoBehaviour:
       data:
         _inputAction:
           m_Name: Input
-          m_Type: 0
-          m_ExpectedControlType: 
+          m_Type: 1
+          m_ExpectedControlType: Button
           m_Id: ed09d6d9-0517-4686-a7dd-181fad450f83
           m_Processors: 
           m_Interactions: 
@@ -1396,6 +1398,42 @@ MonoBehaviour:
           - m_Name: binding
             m_Id: 2fe2e7f7-9fbd-43f3-b8bd-374ec3fe09f4
             m_Path: <Keyboard>/backspace
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
+    - rid: 7460716656807641095
+      type: {class: NavigateHistoryInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 16477a9d-88bf-4e03-a823-5f6bdfa021ea
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 1D Axis
+            m_Id: 7dd32f89-798a-4d01-86c0-65e8899bf744
+            m_Path: 1DAxis
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: negative
+            m_Id: 81638b8a-27ca-4050-ad5b-808fe17187e2
+            m_Path: <Keyboard>/downArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: positive
+            m_Id: 7550375f-aa28-4766-b3aa-b4de6d341555
+            m_Path: <Keyboard>/upArrow
             m_Interactions: 
             m_Processors: 
             m_Groups: 

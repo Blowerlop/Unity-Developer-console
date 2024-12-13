@@ -26,9 +26,9 @@ namespace DeveloperConsole
         
         public readonly Dictionary<string, ConsoleCommand> commands = new();
         public string[] commandsName { get; private set; }
-        private List<string> _commandHistory;
+        public List<string> commandHistory { get; private set; }
         private int _commandHistoryIndex;
-        private int _currentIndex = -1;
+        public int currentHistoryIndex = -1;
         
         [Header("References")]
         [SerializeField] private GameObject _canvas;
@@ -68,7 +68,7 @@ namespace DeveloperConsole
             
             Array.Sort(commandsName);
 
-            _commandHistory = new List<string>(_maxCommandHistory);
+            commandHistory = new List<string>(_maxCommandHistory);
             
             HideForced();
             ClearInputField();
@@ -101,28 +101,6 @@ namespace DeveloperConsole
                 if (_commandPrediction.HasAPrediction())
                 {
                     AutoCompleteTextWithThePrediction();
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                if (_commandPrediction.HasAPrediction())
-                {
-
-                }
-                else
-                {
-                    GotToTheOlderInHistory();
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                if (_commandPrediction.HasAPrediction())
-                {
-                    
-                }
-                else
-                {
-                    GotToTheRecentInHistory();
                 }
             }
         }
@@ -249,13 +227,13 @@ namespace DeveloperConsole
         {
             if (_commandHistoryIndex >= _maxCommandHistory)
             {
-                _commandHistory.RemoveAt(_maxCommandHistory);
+                commandHistory.RemoveAt(_maxCommandHistory);
             }
             
-            _commandHistory.Insert(0, input);
+            commandHistory.Insert(0, input);
             _commandHistoryIndex++;
 
-            _currentIndex = -1;
+            currentHistoryIndex = -1;
         }
 
         public static void AddCommand(ConsoleCommand consoleCommand)
@@ -272,39 +250,6 @@ namespace DeveloperConsole
             else Show();
         }
         
-        private void GotToTheOlderInHistory()
-        {
-            if (_currentIndex + 1 >= _commandHistory.Count)
-            {
-                MoveCaretToTheEndOfTheText();
-                return;
-            }
-
-            _currentIndex++;
-            
-            SetTextOfInputInputFieldSilent(_commandHistory[_currentIndex]);
-        }
-        
-        private void GotToTheRecentInHistory()
-        {
-            if (_currentIndex <= -1)
-            {
-                return;
-            }
-            if (_currentIndex <= 0)
-            {
-                SetTextOfInputInputFieldSilent(string.Empty);
-                _currentIndex = -1;
-                return;
-            }
-
-            _currentIndex--;
-            
-            SetTextOfInputInputFieldSilent(_commandHistory[_currentIndex]);
-        }
-        
-        
-
         private void AutoCompleteTextWithThePrediction()
         {
             SetTextOfInputInputField(_commandPrediction.currentPrediction);
@@ -327,22 +272,12 @@ namespace DeveloperConsole
             inputInputField.SetTextWithoutNotify(text);
             MoveCaretToTheEndOfTheText();
         }
-        
-        private void MoveCaretToTheStartOfTheText()
-        {
-            inputInputField.MoveTextStart(false);
-        }
-        
-        private void MoveCaretToTheEndOfTheText()
+
+        public void MoveCaretToTheEndOfTheText()
         {
             inputInputField.MoveTextEnd(false);
         }
-        
-        private void MoveCaretToPosition(int position)
-        {
-            inputInputField.caretPosition = position;
-        }
-        
+
         private void ClearInputField() => inputInputField.text = (string.Empty);
         
         public void FocusOnInputField()
