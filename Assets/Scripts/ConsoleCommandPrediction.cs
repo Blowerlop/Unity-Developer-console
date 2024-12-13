@@ -19,10 +19,20 @@ namespace DeveloperConsole
         [SerializeField] private GameObject _gameObject;
         [SerializeField] private Button _template;
 
-            
+
+        private void OnEnable()
+        {
+            ConsoleBehaviour.instance.inputInputField.onValueChanged.AddListener(Predict);
+        }
+
+        private void OnDisable()
+        {
+            ConsoleBehaviour.instance.inputInputField.onValueChanged.RemoveListener(Predict);
+        }
+
         public bool HasAPrediction() => !string.IsNullOrEmpty(currentPrediction);
-        
-        public void Predict(string input)
+
+        private void Predict(string input)
         {
             ClearPrediction();
 

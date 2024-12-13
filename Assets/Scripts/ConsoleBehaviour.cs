@@ -38,7 +38,6 @@ namespace DeveloperConsole
         [field: SerializeField] public ScrollRect logScrollRect { get; private set; }
         [field: SerializeField] public TMP_InputField logInputField { get; private set; }
         [field: SerializeField] public TMP_InputField inputInputField { get; private set; }
-        [SerializeField] private ConsoleCommandPrediction _commandPrediction;
         
         // Events
         public Action onShowEvent;
@@ -77,13 +76,11 @@ namespace DeveloperConsole
         private void OnEnable()
         {
             inputInputField.onSubmit.AddListener(ExecuteCommand);
-            inputInputField.onValueChanged.AddListener(_commandPrediction.Predict);
         }
 
         private void OnDisable()
         {
             inputInputField.onSubmit.RemoveListener(ExecuteCommand);
-            inputInputField.onValueChanged.RemoveListener(_commandPrediction.Predict);
         }
 
         private void OnDestroy()
