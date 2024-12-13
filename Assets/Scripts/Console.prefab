@@ -1227,6 +1227,7 @@ GameObject:
   - component: {fileID: 813319985089124156}
   - component: {fileID: 7568533013786001867}
   - component: {fileID: 4293194040823235706}
+  - component: {fileID: 5031351900204818269}
   m_Layer: 0
   m_Name: Console
   m_TagString: Untagged
@@ -1263,30 +1264,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 1
-  _fontSizeRange: {x: 20, y: 60}
   _maxMessages: 100
   _maxCommandHistory: 50
-  _logScrollRect: {fileID: 2934192161782301022}
-  _logInputField: {fileID: 7075882152759586708}
+  _canvas: {fileID: 332920929876778223}
+  <logScrollRect>k__BackingField: {fileID: 2934192161782301022}
+  <logInputField>k__BackingField: {fileID: 7075882152759586708}
   _inputInputField: {fileID: 3861899467939701326}
   _commandPrediction: {fileID: 4293194040823235706}
-  _inputAction:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: d33f7b71-dc05-4952-83b6-255707f68c4a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 1f6c2e2e-ccf3-4126-8bad-c042c9de3702
-      m_Path: <Keyboard>/backquote
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-    m_Flags: 0
+  _logColor: {r: 1, g: 1, b: 1, a: 0}
+  _logWarningColor: {r: 1, g: 0.9702614, b: 0, a: 0}
+  _logErrorColor: {r: 1, g: 0, b: 0, a: 0}
 --- !u!114 &4293194040823235706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,6 +1289,82 @@ MonoBehaviour:
   _inputFieldPredictionPlaceHolder: {fileID: 8690790590487268149}
   _gameObject: {fileID: 6455151232256124146}
   _template: {fileID: 3487362531849110068, guid: cb5047987f95ad640bafca0aa07a5240, type: 3}
+--- !u!114 &5031351900204818269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346266705016090110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e76b801411e4994abb4ece24cc4ee52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _persistantInputs:
+  - rid: 7460716656807641090
+  _nonPersistantInputs:
+  - rid: 7460716656807641091
+  references:
+    version: 2
+    RefIds:
+    - rid: 7460716656807641090
+      type: {class: ToggleInputBehaviour, ns: Inputs, asm: Assembly-CSharp}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 1
+          m_ExpectedControlType: Button
+          m_Id: aceda04f-07c0-4794-8189-964702a6dfab
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 
+            m_Id: e18fff0d-260d-429d-95bc-11b769f67454
+            m_Path: <Keyboard>/backquote
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 0
+          m_Flags: 0
+    - rid: 7460716656807641091
+      type: {class: LogResizeInputBehaviour, ns: DevelopperConsole, asm: Assembly-CSharp}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 938aad98-0ec4-453d-bc95-2022878198ff
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: One Modifier
+            m_Id: 91df7bb8-8814-4abe-8775-b4876b97b14d
+            m_Path: OneModifier
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: modifier
+            m_Id: a328f7c2-133b-429f-a6aa-6efc3fbd46cb
+            m_Path: <Keyboard>/leftCtrl
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: binding
+            m_Id: b3e74414-8a32-43ce-9dc2-c1887647b8be
+            m_Path: <Mouse>/scroll
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
+        _fontSizeRange: {x: 20, y: 60}
 --- !u!1 &2711934960833532717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,7 +2196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.00024414062, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4793270977616948892

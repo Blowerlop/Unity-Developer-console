@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Inputs
+namespace DevelopperConsole
 {
     [Serializable]
-    public abstract class BaseInput
+    public abstract class BaseInputBehaviour
     {
         [SerializeField] private InputAction _inputAction;
         
@@ -22,14 +22,14 @@ namespace Inputs
         
         public void RegisterListener()
         {
-            _inputAction.performed += Listener;
+            _inputAction.performed += Callback;
         }
         
         public void UnRegisterListener()
         {
-            _inputAction.performed -= Listener;
+            _inputAction.performed -= Callback;
         }
 
-        protected abstract void Listener(InputAction.CallbackContext context);
+        protected abstract void Callback(InputAction.CallbackContext context);
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 namespace Inputs
 {
     [Serializable]
-    public class ToggleInput : BaseInput
+    public class ToggleInputBehaviour : BaseInputBehaviour
     {
-        protected override void Listener(InputAction.CallbackContext context)
+        protected override void Callback(InputAction.CallbackContext context)
         {
             ConsoleBehaviour.instance.ToggleConsole();
         }

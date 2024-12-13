@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
 
@@ -24,7 +22,6 @@ namespace DevelopperConsole
         private int _currentNumberOfMessages;
 
         [Header("Parameters")]
-        [SerializeField] private Vector2 _fontSizeRange = new(20, 60);
         [SerializeField] private int _maxMessages = 100;
         [SerializeField] private int _maxCommandHistory = 50;
         
@@ -36,8 +33,8 @@ namespace DevelopperConsole
         
         [Header("References")]
         [SerializeField] private GameObject _canvas;
-        [SerializeField] private ScrollRect _logScrollRect;
-        [SerializeField] private TMP_InputField _logInputField;
+        [field: SerializeField] public ScrollRect logScrollRect { get; private set; }
+        [field: SerializeField] public TMP_InputField logInputField { get; private set; }
         [SerializeField] private TMP_InputField _inputInputField;
         [SerializeField] private ConsoleCommandPrediction _commandPrediction;
 
@@ -99,13 +96,7 @@ namespace DevelopperConsole
         {
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                GameObject currentCurrentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-                if (currentCurrentSelectedGameObject == _logScrollRect.gameObject ||
-                    currentCurrentSelectedGameObject == _logInputField.gameObject)
-                {
-                    IncreaseOrDecreaseLogTextSize();
-                }
-                else if (Input.GetKeyDown(KeyCode.Backspace) && isInputFieldFocus)
+                if (Input.GetKeyDown(KeyCode.Backspace) && isInputFieldFocus)
                 {
                     DeleteWordShortcut();
                 }
@@ -322,12 +313,6 @@ namespace DevelopperConsole
             SetTextOfInputInputFieldSilent(_commandHistory[_currentIndex]);
         }
         
-        private void IncreaseOrDecreaseLogTextSize()
-        {
-            _logInputField.pointSize = Mathf.Clamp(_logInputField.pointSize + Input.mouseScrollDelta.y, _fontSizeRange.x,
-                _fontSizeRange.y);
-        }
-        
         private void DeleteWordShortcut()
         {
             int startWordPosition = 0;
@@ -433,7 +418,7 @@ namespace DevelopperConsole
         
         private void LogConsole(string condition, string stacktrace, LogType logType)
         {
-            bool setAtBottom = _logScrollRect.verticalNormalizedPosition <= 0.01f;
+            bool setAtBottom = logScrollRect.verticalNormalizedPosition <= 0.01f;
 
             Color logColor;
             switch (logType)
@@ -452,7 +437,7 @@ namespace DevelopperConsole
                     break;
             }
             
-            _logInputField.text += $"<color=#{ColorUtility.ToHtmlStringRGB(logColor)}>{condition}</color>\n";
+            logInputField.text += $"<color=#{ColorUtility.ToHtmlStringRGB(logColor)}>{condition}</color>\n";
 
             if (_currentNumberOfMessages >= _maxMessages)
             {
@@ -467,7 +452,7 @@ namespace DevelopperConsole
         public void ClearLogs()
         {
             Debug.Log("Console cleared");
-            _logInputField.text = string.Empty;
+            logInputField.text = string.Empty;
             _currentNumberOfMessages = 0;
         }
 
