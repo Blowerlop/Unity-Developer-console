@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 813319985089124156}
   - component: {fileID: 7568533013786001867}
   - component: {fileID: 4293194040823235706}
-  - component: {fileID: 5031351900204818269}
+  - component: {fileID: 4219441636944996306}
   m_Layer: 0
   m_Name: Console
   m_TagString: Untagged
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   _canvas: {fileID: 332920929876778223}
   <logScrollRect>k__BackingField: {fileID: 2934192161782301022}
   <logInputField>k__BackingField: {fileID: 7075882152759586708}
-  _inputInputField: {fileID: 3861899467939701326}
+  <inputInputField>k__BackingField: {fileID: 3861899467939701326}
   _commandPrediction: {fileID: 4293194040823235706}
   _logColor: {r: 1, g: 1, b: 1, a: 0}
   _logWarningColor: {r: 1, g: 0.9702614, b: 0, a: 0}
@@ -1289,7 +1289,7 @@ MonoBehaviour:
   _inputFieldPredictionPlaceHolder: {fileID: 8690790590487268149}
   _gameObject: {fileID: 6455151232256124146}
   _template: {fileID: 3487362531849110068, guid: cb5047987f95ad640bafca0aa07a5240, type: 3}
---- !u!114 &5031351900204818269
+--- !u!114 &4219441636944996306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1302,25 +1302,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistantInputs:
-  - rid: 7460716656807641090
+  - rid: 7460716656807641092
   _nonPersistantInputs:
-  - rid: 7460716656807641091
+  - rid: 7460716656807641093
+  - rid: 7460716656807641094
   references:
     version: 2
     RefIds:
-    - rid: 7460716656807641090
-      type: {class: ToggleInputBehaviour, ns: Inputs, asm: Assembly-CSharp}
+    - rid: 7460716656807641092
+      type: {class: ToggleInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 1
           m_ExpectedControlType: Button
-          m_Id: aceda04f-07c0-4794-8189-964702a6dfab
+          m_Id: 79dac815-b9c3-481e-99df-c46626a651bc
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: 
-            m_Id: e18fff0d-260d-429d-95bc-11b769f67454
+            m_Id: 88037b8e-dfde-43fd-89f3-74740e5142f0
             m_Path: <Keyboard>/backquote
             m_Interactions: 
             m_Processors: 
@@ -1328,19 +1329,19 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 0
           m_Flags: 0
-    - rid: 7460716656807641091
-      type: {class: LogResizeInputBehaviour, ns: DevelopperConsole, asm: Assembly-CSharp}
+    - rid: 7460716656807641093
+      type: {class: LogResizeInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: 938aad98-0ec4-453d-bc95-2022878198ff
+          m_Id: 43150303-118e-407b-b167-cc1ed6b01b5d
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: One Modifier
-            m_Id: 91df7bb8-8814-4abe-8775-b4876b97b14d
+            m_Id: 71a6b648-f420-443b-8221-d48a78ef9c8e
             m_Path: OneModifier
             m_Interactions: 
             m_Processors: 
@@ -1348,7 +1349,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 4
           - m_Name: modifier
-            m_Id: a328f7c2-133b-429f-a6aa-6efc3fbd46cb
+            m_Id: d6cd887c-ceb8-4319-9cb5-8a58a7104bd2
             m_Path: <Keyboard>/leftCtrl
             m_Interactions: 
             m_Processors: 
@@ -1356,7 +1357,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           - m_Name: binding
-            m_Id: b3e74414-8a32-43ce-9dc2-c1887647b8be
+            m_Id: e418a625-e5ae-4533-9e29-67e6e26c9ecd
             m_Path: <Mouse>/scroll
             m_Interactions: 
             m_Processors: 
@@ -1365,6 +1366,42 @@ MonoBehaviour:
             m_Flags: 8
           m_Flags: 0
         _fontSizeRange: {x: 20, y: 60}
+    - rid: 7460716656807641094
+      type: {class: FastDeleteInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: ed09d6d9-0517-4686-a7dd-181fad450f83
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: One Modifier
+            m_Id: 54263571-556d-457f-9767-b618757b4e2b
+            m_Path: OneModifier
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: modifier
+            m_Id: a621a1ee-40a2-47d7-86fe-f9093da96316
+            m_Path: <Keyboard>/leftCtrl
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: binding
+            m_Id: 2fe2e7f7-9fbd-43f3-b8bd-374ec3fe09f4
+            m_Path: <Keyboard>/backspace
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
 --- !u!1 &2711934960833532717
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ namespace DeveloperConsole
 
         // Console State
         public bool isConsoleEnabled => _canvas.activeSelf;
-        private bool isInputFieldFocus => _inputInputField != null && _inputInputField.isFocused;
+        public bool isInputFieldFocus => inputInputField.isFocused;
         private int _currentNumberOfMessages;
 
         [Header("Parameters")]
@@ -34,7 +34,7 @@ namespace DeveloperConsole
         [SerializeField] private GameObject _canvas;
         [field: SerializeField] public ScrollRect logScrollRect { get; private set; }
         [field: SerializeField] public TMP_InputField logInputField { get; private set; }
-        [SerializeField] private TMP_InputField _inputInputField;
+        [field: SerializeField] public TMP_InputField inputInputField { get; private set; }
         [SerializeField] private ConsoleCommandPrediction _commandPrediction;
 
         [SerializeField, ColorUsage(false)] private Color _logColor;
@@ -76,14 +76,14 @@ namespace DeveloperConsole
 
         private void OnEnable()
         {
-            _inputInputField.onSubmit.AddListener(ExecuteCommand);
-            _inputInputField.onValueChanged.AddListener(_commandPrediction.Predict);
+            inputInputField.onSubmit.AddListener(ExecuteCommand);
+            inputInputField.onValueChanged.AddListener(_commandPrediction.Predict);
         }
 
         private void OnDisable()
         {
-            _inputInputField.onSubmit.RemoveListener(ExecuteCommand);
-            _inputInputField.onValueChanged.RemoveListener(_commandPrediction.Predict);
+            inputInputField.onSubmit.RemoveListener(ExecuteCommand);
+            inputInputField.onValueChanged.RemoveListener(_commandPrediction.Predict);
         }
 
         private void OnDestroy()
@@ -93,15 +93,6 @@ namespace DeveloperConsole
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                if (Input.GetKeyDown(KeyCode.Backspace) && isInputFieldFocus)
-                {
-                    DeleteWordShortcut();
-                }
-            }
-
-
             // InputField Related
             if (isInputFieldFocus == false) return;
             
@@ -312,20 +303,7 @@ namespace DeveloperConsole
             SetTextOfInputInputFieldSilent(_commandHistory[_currentIndex]);
         }
         
-        private void DeleteWordShortcut()
-        {
-            int startWordPosition = 0;
-            for (int i = _inputInputField.caretPosition - 1; i >= 0; i--)
-            { 
-                if (_inputInputField.text[i] == ' ')
-                {
-                    startWordPosition = i;
-                    break;
-                }
-            }
-            
-            SetTextOfInputInputField(_inputInputField.text.Remove(startWordPosition, _inputInputField.caretPosition - startWordPosition));
-        }
+        
 
         private void AutoCompleteTextWithThePrediction()
         {
@@ -336,40 +314,40 @@ namespace DeveloperConsole
         #region Utilities
         public void SetTextOfInputInputField(string text)
         {
-            if (string.Equals(_inputInputField.text, text)) return;
+            if (string.Equals(inputInputField.text, text)) return;
             
-            _inputInputField.text = text;
+            inputInputField.text = text;
             MoveCaretToTheEndOfTheText();
         }
         
         public void SetTextOfInputInputFieldSilent(string text)
         {
-            if (string.Equals(_inputInputField.text, text)) return;
+            if (string.Equals(inputInputField.text, text)) return;
             
-            _inputInputField.SetTextWithoutNotify(text);
+            inputInputField.SetTextWithoutNotify(text);
             MoveCaretToTheEndOfTheText();
         }
         
         private void MoveCaretToTheStartOfTheText()
         {
-            _inputInputField.MoveTextStart(false);
+            inputInputField.MoveTextStart(false);
         }
         
         private void MoveCaretToTheEndOfTheText()
         {
-            _inputInputField.MoveTextEnd(false);
+            inputInputField.MoveTextEnd(false);
         }
         
         private void MoveCaretToPosition(int position)
         {
-            _inputInputField.caretPosition = position;
+            inputInputField.caretPosition = position;
         }
         
-        private void ClearInputField() => _inputInputField.text = (string.Empty);
+        private void ClearInputField() => inputInputField.text = (string.Empty);
         
         public void FocusOnInputField()
         {
-            _inputInputField.ActivateInputField();
+            inputInputField.ActivateInputField();
         }
         
         

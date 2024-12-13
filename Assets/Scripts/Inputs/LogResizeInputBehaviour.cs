@@ -8,8 +8,6 @@ namespace DeveloperConsole.Inputs
     [Serializable]
     public class LogResizeInputBehaviour : BaseInputBehaviour
     {
-        private ConsoleBehaviour _consoleBehaviourInstance => ConsoleBehaviour.instance;
-        
         [Header("Parameters")]
         [SerializeField] private Vector2 _fontSizeRange = new(20, 60);
         
@@ -17,8 +15,8 @@ namespace DeveloperConsole.Inputs
         protected override void Callback(InputAction.CallbackContext context)
         {
             GameObject currentCurrentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-            if (currentCurrentSelectedGameObject == _consoleBehaviourInstance.logScrollRect.gameObject ||
-                currentCurrentSelectedGameObject == _consoleBehaviourInstance.logInputField.gameObject)
+            if (currentCurrentSelectedGameObject == consoleBehaviourInstance.logScrollRect.gameObject ||
+                currentCurrentSelectedGameObject == consoleBehaviourInstance.logInputField.gameObject)
             {
                 IncreaseOrDecreaseLogTextSize();
             }
@@ -26,7 +24,7 @@ namespace DeveloperConsole.Inputs
         
         private void IncreaseOrDecreaseLogTextSize()
         {
-            _consoleBehaviourInstance.logInputField.pointSize = Mathf.Clamp(_consoleBehaviourInstance.logInputField.pointSize + Input.mouseScrollDelta.y, _fontSizeRange.x,
+            consoleBehaviourInstance.logInputField.pointSize = Mathf.Clamp(consoleBehaviourInstance.logInputField.pointSize + Input.mouseScrollDelta.y, _fontSizeRange.x,
                 _fontSizeRange.y);
         }
     }

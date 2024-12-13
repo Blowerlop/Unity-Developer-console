@@ -8,6 +8,8 @@ namespace DeveloperConsole.Inputs
     public abstract class BaseInputBehaviour
     {
         [SerializeField] private InputAction _inputAction;
+
+        protected ConsoleBehaviour consoleBehaviourInstance => ConsoleBehaviour.instance;
         
         
         public void Enable()
