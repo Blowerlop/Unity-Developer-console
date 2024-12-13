@@ -228,16 +228,7 @@ namespace DeveloperConsole
         }
 
         #endregion
-        
-        #region Used by shortcut
-        public void ToggleConsole()
-        {
-            if (isConsoleEnabled) Hide();
-            else Show();
-        }
-        
-        #endregion
-        
+
         #region Utilities
         public void SetTextOfInputInputField(string text)
         {

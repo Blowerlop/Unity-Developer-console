@@ -8,7 +8,13 @@ namespace DeveloperConsole.Inputs
     {
         protected override void Callback(InputAction.CallbackContext context)
         {
-            ConsoleBehaviour.instance.ToggleConsole();
+            ToggleConsole();
+        }
+        
+        public void ToggleConsole()
+        {
+            if (consoleBehaviourInstance.isConsoleEnabled) consoleBehaviourInstance.Hide();
+            else consoleBehaviourInstance.Show();
         }
     }
 }

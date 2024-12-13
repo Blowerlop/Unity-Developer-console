@@ -8,6 +8,8 @@ namespace DeveloperConsole.Inputs
     {
         protected override void Callback(InputAction.CallbackContext context)
         {
+            if (!consoleBehaviourInstance.isInputFieldFocus) return;
+            
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (context.ReadValue<float>() == -1)
             {
