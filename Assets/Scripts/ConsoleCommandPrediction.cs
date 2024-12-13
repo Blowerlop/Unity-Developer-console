@@ -106,6 +106,16 @@ namespace DeveloperConsole
                     // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>";
                     _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}";
                 }
+                
+                var parameterResolverAttribute = parameterInfo.GetCustomAttribute<ParameterResolverAttribute>();
+                if (parameterResolverAttribute != null)
+                {
+                    string[] resolve = parameterResolverAttribute.Resolve();
+                    foreach (string s in resolve)
+                    {
+                        Debug.Log(s);
+                    }
+                }
             }
         }
 
