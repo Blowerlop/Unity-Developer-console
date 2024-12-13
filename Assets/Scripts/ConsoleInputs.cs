@@ -1,15 +1,12 @@
-﻿using System;
-using Inputs;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 namespace DevelopperConsole
 {
     public class ConsoleInputs : MonoBehaviour
     {
-        [Tooltip("Input enable even when the console is disabled")]
-        [SerializeReference, SubclassPicker] private BaseInput[] _persistantInputs;
-        [SerializeReference, SubclassPicker] private BaseInput[] _nonPersistantInputs;
+        [Tooltip("Inputs enable even when the console is disabled")]
+        [SerializeReference, SubclassPicker] private BaseInputBehaviour[] _persistantInputs;
+        [SerializeReference, SubclassPicker] private BaseInputBehaviour[] _nonPersistantInputs;
 
 
         private void Start()
