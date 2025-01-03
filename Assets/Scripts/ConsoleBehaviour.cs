@@ -175,7 +175,7 @@ namespace DeveloperConsole
 
                 try
                 {
-                    // The is the only parameter type that is force check because C# does not Parse 0 and 1 as boolean
+                    // 0 and 1 are not parse as boolean
                     if (parameterType == typeof(bool))
                     {
                         if (bool.TryParse(inputParameter, out bool boolValue))
@@ -189,6 +189,10 @@ namespace DeveloperConsole
                             else if (valueInt == 1) parameterResult = true;
                             else throw new FormatException();
                         }
+                    }
+                    else if (parameterType.IsEnum)
+                    {
+                        parameterResult = Enum.Parse(parameterType, inputParameter, true);
                     }
                     else
                     {
