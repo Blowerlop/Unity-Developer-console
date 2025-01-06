@@ -64,11 +64,11 @@ namespace DeveloperConsole
                 return;
             }
             
-            ComputePrediction(input, _allCommandsName.First(), 0, commandInput, splitInput);
+            ComputePrediction(input, splitInput, _allCommandsName.First(), 0);
             GeneratePredictionButtons(_allCommandsName);
         }
 
-        private void ComputePrediction(string input, string predictionName, uint index, string commandInput, IReadOnlyCollection<string> splitInput)
+        private void ComputePrediction(string input, IReadOnlyList<string> splitInput, string predictionName, uint index)
         {
             currentPrediction = predictionName;
             
@@ -81,10 +81,44 @@ namespace DeveloperConsole
 
             this.index = index;
 
-            int inputLength = commandInput.Length;
+            PredictCommand(input, splitInput[0]);
+            PredictParameters(splitInput);
+            
+            onPredict?.Invoke(ConsoleBehaviour.instance.commands[currentPrediction], splitInput.Count - 1);
+        }
 
-            string preWriteCommandName = currentPrediction.Substring(0, inputLength);
-            string nonWriteCommandName = currentPrediction.Substring(inputLength);
+        private void PredictParameters(IReadOnlyCollection<string> splitInput)
+        {
+            for (int i = splitInput.Count - 1; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
+            {
+                ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
+                PredictParameter(parameterInfo);
+            }
+        }
+
+        private void PredictParameter(ParameterInfo parameterInfo)
+        {
+            if (parameterInfo.HasDefaultValue)
+            {
+                // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>(Optional)";
+                _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}(Optional)";
+            }
+            else
+            {
+                // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>";
+                _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}";
+            }
+        }
+
+        private void PredictCommand(string input, string commandInput)
+        {
+            int commandInputLength = commandInput.Length;
+
+            string preWriteCommandName = currentPrediction.Substring(0, commandInputLength);
+            string nonWriteCommandName = currentPrediction.Substring(commandInputLength);
+            
+            // Correct user input to match the command name
+            ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(input.Remove(0, commandInputLength).Insert(0, currentPrediction.Substring(0, commandInputLength)));
 
             if (string.IsNullOrEmpty(nonWriteCommandName))
             {
@@ -94,30 +128,14 @@ namespace DeveloperConsole
             {
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{preWriteCommandName}</color>{nonWriteCommandName}";
             }
-
-            for (int i = splitInput.Count - 1; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
-            {
-                ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
-                if (parameterInfo.HasDefaultValue)
-                {
-                    // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>(Optional)";
-                    _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}(Optional)";
-                }
-                else
-                {
-                    // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>";
-                    _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}";
-                }
-            }
-            
-            onPredict?.Invoke(ConsoleBehaviour.instance.commands[currentPrediction], splitInput.Count - 1);
         }
+        
+        
 
         public void ComputePrediction(string predictionName, uint index)
         {
             ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictionName);
-            ComputePrediction(predictionName, predictionName, index, predictionName,
-                new[] { predictionName });
+            ComputePrediction(predictionName, new []{predictionName}, predictionName, index);
             ConsoleBehaviour.instance.FocusOnInputField();
             ConsoleBehaviour.instance.MoveCaretToTheEndOfTheText();
         }
