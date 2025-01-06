@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using DeveloperConsole.Extensions;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +14,9 @@ namespace DeveloperConsole
     public class ConsoleCommandPrediction : MonoBehaviour
     {
         [SerializeField] private TMP_Text _inputFieldPredictionPlaceHolder;
-        [CanBeNull] public string currentPrediction { get; private set; }
+        public string currentPrediction { get; private set; }
+        private List<string> _allCommandsName = new(20);
+        public uint index { get; private set; }
         [SerializeField] private GameObject _gameObject;
         [SerializeField] private Button _template;
 
@@ -44,7 +45,7 @@ namespace DeveloperConsole
             string[] splitInput = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
             string commandInput = splitInput[0];
 
-            HashSet<string> allCommandsName = new HashSet<string>();
+            _allCommandsName = new List<string>();
 
             for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
             {
@@ -52,33 +53,33 @@ namespace DeveloperConsole
                 
                 if (commandName.StartsWith(commandInput, true, CultureInfo.InvariantCulture))
                 {
-                    allCommandsName.Add(ConsoleBehaviour.instance.commandsName[i]);
+                    _allCommandsName.Add(ConsoleBehaviour.instance.commandsName[i]);
                 }
                 
             }
 
-            if (allCommandsName.Any() == false)
+            if (_allCommandsName.Any() == false)
             {
                 ClearPrediction();
                 return;
             }
             
-            ComputeFirstPrediction(input, allCommandsName.First(), commandInput, splitInput);
-            ComputeAdditionalPrediction(allCommandsName);
+            ComputePrediction(input, _allCommandsName.First(), 0, commandInput, splitInput);
+            GeneratePredictionButtons(_allCommandsName);
         }
 
-        private void ComputeFirstPrediction(string input, string firstPredictionName, string commandInput, IReadOnlyCollection<string> splitInput)
+        private void ComputePrediction(string input, string predictionName, uint index, string commandInput, IReadOnlyCollection<string> splitInput)
         {
-            currentPrediction = firstPredictionName;
-#if UNITY_EDITOR
-            // Just to make Rider happy :)
+            currentPrediction = predictionName;
+            
             if (currentPrediction == null)
             {
                 Debug.LogError("Current prediction is null, it should never happen");
                 ClearPrediction();
                 return;
             }
-#endif
+
+            this.index = index;
 
             int inputLength = commandInput.Length;
 
@@ -112,31 +113,50 @@ namespace DeveloperConsole
             onPredict?.Invoke(ConsoleBehaviour.instance.commands[currentPrediction], splitInput.Count - 1);
         }
 
-        
-        private void ComputeAdditionalPrediction(HashSet<string> allPredictionsName)
+        public void ComputePrediction(string predictionName, uint index)
         {
+            ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictionName);
+            ComputePrediction(predictionName, predictionName, index, predictionName,
+                new[] { predictionName });
+            ConsoleBehaviour.instance.FocusOnInputField();
+            ConsoleBehaviour.instance.MoveCaretToTheEndOfTheText();
+        }
+
+
+        private void GeneratePredictionButtons(List<string> allPredictionsName)
+        {
+            uint i = 0;
             foreach (string predictionsName in allPredictionsName)
             {
-                Button instance = Instantiate(_template, _gameObject.transform);
-                instance.onClick.AddListener(() =>
-                {
-                    ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictionsName);
-                    ComputeFirstPrediction(predictionsName, predictionsName, predictionsName,
-                        new[] { predictionsName });
-                    ConsoleBehaviour.instance.FocusOnInputField();
-                });
-                instance.GetComponentInChildren<TMP_Text>().text = predictionsName;
+                GeneratePredictionButton(predictionsName, i++);
             }
+        }
+        
+        private void GeneratePredictionButton(string predictionName, uint index)
+        {
+            Button instance = Instantiate(_template, _gameObject.transform);
+            instance.onClick.AddListener(() =>
+            {
+                ComputePrediction(predictionName, index);
+            });
+            instance.GetComponentInChildren<TMP_Text>().text = predictionName;
         }
 
         private void ClearPrediction()
         {
-            if (currentPrediction == null) return;
+            if (!HasAPrediction()) return;
             
             currentPrediction = null;
             _inputFieldPredictionPlaceHolder.text = string.Empty;
+            _allCommandsName.Clear();
             _gameObject.DestroyChildren();
+            index = 0;
             onStopPredict?.Invoke();
+        }
+
+        public IReadOnlyList<string> GetPredictionsName()
+        {
+            return _allCommandsName;
         }
     }
 }

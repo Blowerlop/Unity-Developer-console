@@ -1407,9 +1407,46 @@ MonoBehaviour:
   - rid: 7460716656807641094
   - rid: 7460716656807641095
   - rid: 7460716656807641096
+  - rid: 1228592230269452291
   references:
     version: 2
     RefIds:
+    - rid: 1228592230269452291
+      type: {class: NavigateTroughPredictionInputBehaviour, ns: DeveloperConsole, asm: Assembly-CSharp}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 16477a9d-88bf-4e03-a823-5f6bdfa021ea
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 1D Axis
+            m_Id: 7dd32f89-798a-4d01-86c0-65e8899bf744
+            m_Path: 1DAxis
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: negative
+            m_Id: 81638b8a-27ca-4050-ad5b-808fe17187e2
+            m_Path: <Keyboard>/downArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: positive
+            m_Id: 7550375f-aa28-4766-b3aa-b4de6d341555
+            m_Path: <Keyboard>/upArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
     - rid: 7460716656807641092
       type: {class: ToggleInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
       data:

@@ -6,9 +6,20 @@ namespace DeveloperConsole.Inputs
     [Serializable]
     public class NavigateHistoryInputBehaviour : BaseInputBehaviour
     {
+        private ConsoleCommandPrediction _consoleCommandPrediction;
+
+
+        protected override void OnInit()
+        {
+            base.OnInit();
+            
+            _consoleCommandPrediction = consoleBehaviourInstance.GetComponentInChildren<ConsoleCommandPrediction>();
+        }
+
         protected override void Callback(InputAction.CallbackContext context)
         {
             if (!consoleBehaviourInstance.isInputFieldFocus) return;
+            if (_consoleCommandPrediction != null && _consoleCommandPrediction.HasAPrediction()) return;
             
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (context.ReadValue<float>() == -1)

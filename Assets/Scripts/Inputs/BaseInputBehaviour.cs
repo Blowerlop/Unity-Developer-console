@@ -16,10 +16,18 @@ namespace DeveloperConsole.Inputs
         {
             _inputAction.Enable();
         }
+
+        public virtual void OnEnable()
+        {
+        }
         
         public void Disable()
         {
             _inputAction.Disable();
+        }
+        
+        public virtual void OnDisable()
+        {
         }
         
         public void RegisterListener()
