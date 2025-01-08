@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,14 @@ namespace DeveloperConsole
 {
     public class ConsoleCommandPrediction : MonoBehaviour
     {
+        private struct ParseInput
+        {
+            public string raw;
+            public string command;
+            public string[] split;
+        }
+        
+        
         [SerializeField] private TMP_Text _inputFieldPredictionPlaceHolder;
         public string currentPrediction { get; private set; }
         private List<string> _allCommandsName = new(20);
@@ -43,9 +52,34 @@ namespace DeveloperConsole
 
             if (string.IsNullOrEmpty(input)) return;
             
-            string[] splitInput = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            string commandInput = splitInput[0];
+            ParseInput parseInput = new ParseInput()
+            {
+                raw = input,
+                split = input.Split(" ", StringSplitOptions.RemoveEmptyEntries),
+            };
+            
+            parseInput.command = parseInput.split[0];
+            
+            RetrieveCommandsNameThatStartWith(parseInput.command);
 
+            if (_allCommandsName.Any() == false) return;
+            
+            PredictCommand(parseInput, _allCommandsName.First(), 0);
+
+            if (parseInput.command == currentPrediction)
+            {
+                PredictParameters(parseInput.split);
+                return;
+            }
+
+            if (!IsWritingParameter(parseInput.split))
+            {
+                GeneratePredictionButtons(_allCommandsName);
+            }
+        }
+
+        private void RetrieveCommandsNameThatStartWith(string commandInput)
+        {
             _allCommandsName = new List<string>();
 
             for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
@@ -56,22 +90,6 @@ namespace DeveloperConsole
                 {
                     _allCommandsName.Add(ConsoleBehaviour.instance.commandsName[i]);
                 }
-                
-            }
-
-            if (_allCommandsName.Any() == false) return;
-            
-            ComputePrediction(input, splitInput, _allCommandsName.First(), 0);
-
-            if (commandInput == currentPrediction)
-            {
-                PredictParameters(splitInput);
-                return;
-            }
-
-            if (!IsWritingParameter(splitInput))
-            {
-                GeneratePredictionButtons(_allCommandsName);
             }
         }
 
@@ -80,27 +98,9 @@ namespace DeveloperConsole
             return splitInput.Length > 1;
         }
 
-        private void ComputePrediction(string input, IReadOnlyList<string> splitInput, string predictionName, uint index)
-        {
-            currentPrediction = predictionName;
-            
-            if (currentPrediction == null)
-            {
-                Debug.LogError("Current prediction is null, it should never happen");
-                ClearPrediction();
-                return;
-            }
-
-            this.index = index;
-
-            PredictCommand(input, splitInput[0]);
-            
-            onPredict?.Invoke(ConsoleBehaviour.instance.commands[currentPrediction], splitInput.Count - 1);
-        }
-
         private void PredictParameters(IReadOnlyCollection<string> splitInput)
         {
-            string text = currentPrediction;
+            StringBuilder stringBuilder = new StringBuilder(currentPrediction);
 
             int currentParameterIndex;
             if (splitInput.Count == 1) currentParameterIndex = 0;
@@ -110,30 +110,46 @@ namespace DeveloperConsole
             {
                 ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
 
-                if (currentParameterIndex == i ) text += "<b>";
+                bool isThisParameterTheCurrentOne = currentParameterIndex == i;
+                if (isThisParameterTheCurrentOne) stringBuilder.Append(Constants.Styles.Bold.START);
                 
-                text += $" {parameterInfo.Name}({parameterInfo.ParameterType.Name})";
+                stringBuilder.Append($"{parameterInfo.Name}({parameterInfo.ParameterType.Name})");
                 
                 if (parameterInfo.HasDefaultValue)
                 {
-                    // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>(Optional)";
-                    text += "(Optional)";
+                    stringBuilder.Append("(Optional)");
                 }
                 
-                if (currentParameterIndex == i) text += "</b>";
+                if (isThisParameterTheCurrentOne) stringBuilder.Append(Constants.Styles.Bold.END);
             }
             
-            InstantiateButton(text, null);
+            InstantiateButton(stringBuilder.ToString(), null);
         }
 
-        private void PredictCommand(string input, string commandInput)
+        public void PredictCommand(string predictedCommandName, uint index)
         {
-            int commandInputLength = commandInput.Length;
+            ParseInput parseInput = new ParseInput()
+            {
+                raw = predictedCommandName,
+                command = predictedCommandName
+            };
+            
+            PredictCommand(parseInput, predictedCommandName, index);
+            ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictedCommandName);
+        }
+
+        private void PredictCommand(ParseInput parseInput, string predictedCommandName, uint index)
+        {
+            currentPrediction = predictedCommandName;
+            this.index = index;
+
+            int commandInputLength = parseInput.command.Length;
             
             // Correct user input to match the command name
-            if (input != currentPrediction)
+            if (parseInput.raw != currentPrediction)
             {
-                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(input.Remove(0, commandInputLength).Insert(0, currentPrediction.Substring(0, commandInputLength)));
+                string newText = parseInput.raw.Remove(0, commandInputLength).Insert(0, currentPrediction.Substring(0, commandInputLength));
+                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(newText);
             }
             
             string preWriteCommandName = currentPrediction.Substring(0, commandInputLength);
@@ -141,8 +157,7 @@ namespace DeveloperConsole
 
             if (string.IsNullOrEmpty(nonWriteCommandName))
             {
-                _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{input}</color>";
-                OnCommandPredicted();
+                _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{parseInput.raw}</color>";
             }
             else
             {
@@ -150,22 +165,6 @@ namespace DeveloperConsole
             }
         }
         
-        private void OnCommandPredicted()
-        {
-            
-        }
-        
-        
-
-        public void ComputePrediction(string predictionName, uint index)
-        {
-            ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictionName);
-            ComputePrediction(predictionName, new []{predictionName}, predictionName, index);
-            ConsoleBehaviour.instance.FocusOnInputField();
-            ConsoleBehaviour.instance.MoveCaretToTheEndOfTheText();
-        }
-
-
         private void GeneratePredictionButtons(List<string> allPredictionsName)
         {
             uint i = 0;
@@ -180,7 +179,7 @@ namespace DeveloperConsole
             Button instance = Instantiate(_template, _gameObject.transform);
             instance.onClick.AddListener(() =>
             {
-                ComputePrediction(predictionName, index);
+                PredictCommand(predictionName, index);
             });
             instance.GetComponentInChildren<TMP_Text>().text = predictionName;
         }
@@ -193,8 +192,8 @@ namespace DeveloperConsole
             if (onClick != null) instance.onClick.AddListener(onClick);
 
             return instance;
-        }   
-
+        }  
+        
         private void ClearPrediction()
         {
             if (!HasAPrediction()) return;

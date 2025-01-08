@@ -37,7 +37,7 @@ namespace DeveloperConsole
                 predictionName = _consoleCommandPrediction.GetPredictionsName().Next(ref index);
             }
             
-            _consoleCommandPrediction.ComputePrediction(predictionName, (uint)index);
+            _consoleCommandPrediction.PredictCommand(predictionName, (uint)index);
         }
     }
 }
