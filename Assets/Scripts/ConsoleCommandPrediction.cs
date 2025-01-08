@@ -20,6 +20,7 @@ namespace DeveloperConsole
             public string raw;
             public string command;
             public string[] split;
+            public bool isEndingWithSpace => raw.EndsWith(' ');
         }
         
         
@@ -30,7 +31,7 @@ namespace DeveloperConsole
         [SerializeField] private GameObject _gameObject;
         [SerializeField] private Button _template;
 
-        public event Action<ConsoleCommand, int> onPredict;
+        public event Action<ParameterInfo> onPredictParameter;
         public event Action onStopPredict;
 
 
@@ -68,7 +69,7 @@ namespace DeveloperConsole
 
             if (parseInput.command == currentPrediction)
             {
-                PredictParameters(parseInput.split);
+                PredictParameters(parseInput);
                 return;
             }
 
@@ -98,22 +99,30 @@ namespace DeveloperConsole
             return splitInput.Length > 1;
         }
 
-        private void PredictParameters(IReadOnlyCollection<string> splitInput)
+        private void PredictParameters(ParseInput parseInput)
         {
             StringBuilder stringBuilder = new StringBuilder(currentPrediction);
 
             int currentParameterIndex;
-            if (splitInput.Count == 1) currentParameterIndex = 0;
-            else currentParameterIndex = splitInput.Count - 2;
+            if (parseInput.split.Length == 1) currentParameterIndex = 0;
+            else
+            {
+                currentParameterIndex = parseInput.split.Length - 2;
+                if (parseInput.isEndingWithSpace) currentParameterIndex++;
+            }
             
-            for (int i = 0; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
+            ConsoleCommand currentCommand = ConsoleBehaviour.instance.commands[currentPrediction];
+            
+            if (currentParameterIndex >= currentCommand.parametersInfo.Length) return;
+            
+            for (int i = 0; i < currentCommand.parametersInfo.Length; i++)
             {
                 ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
 
                 bool isThisParameterTheCurrentOne = currentParameterIndex == i;
                 if (isThisParameterTheCurrentOne) stringBuilder.Append(Constants.Styles.Bold.START);
                 
-                stringBuilder.Append($"{parameterInfo.Name}({parameterInfo.ParameterType.Name})");
+                stringBuilder.Append($" {parameterInfo.Name}({parameterInfo.ParameterType.Name})");
                 
                 if (parameterInfo.HasDefaultValue)
                 {
@@ -124,6 +133,8 @@ namespace DeveloperConsole
             }
             
             InstantiateButton(stringBuilder.ToString(), null);
+            
+            onPredictParameter?.Invoke(currentCommand.parametersInfo[currentParameterIndex]);
         }
 
         public void PredictCommand(string predictedCommandName, uint index)

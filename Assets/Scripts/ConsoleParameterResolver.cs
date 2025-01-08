@@ -23,23 +23,20 @@ namespace DeveloperConsole
 
         private void OnEnable()
         {
-            _consoleCommandPrediction.onPredict += OnPredict;
+            _consoleCommandPrediction.onPredictParameter += OnPredictParameter;
             _consoleCommandPrediction.onStopPredict += OnStopPredict;
         }
 
         private void OnDisable()
         {
-            _consoleCommandPrediction.onPredict -= OnPredict;
+            _consoleCommandPrediction.onPredictParameter -= OnPredictParameter;
             _consoleCommandPrediction.onStopPredict -= OnStopPredict;
         }
         
         
-        private void OnPredict(ConsoleCommand consoleCommand, int parameterIndex)
+        private void OnPredictParameter(ParameterInfo parameterInfo)
         {
-            if (consoleCommand.parametersInfo.Length == 0) return;
-            if (parameterIndex >= consoleCommand.parametersInfo.Length) return;
-            
-            var parameterResolverAttribute = consoleCommand.parametersInfo[parameterIndex].GetCustomAttribute<ParameterResolverAttribute>();
+            var parameterResolverAttribute = parameterInfo.GetCustomAttribute<ParameterResolverAttribute>();
 
             var values = parameterResolverAttribute.Resolve();
             for (var i = 0; i < values.Length; i++)
@@ -49,15 +46,11 @@ namespace DeveloperConsole
                 Button instance = Instantiate(_template, _gameObject.transform);
                 instance.onClick.AddListener(() =>
                 {
-                    // ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(predictionsName);
-                    // ComputeFirstPrediction(predictionsName, predictionsName, predictionsName,
-                    //     new[] { predictionsName });
-                    // ConsoleBehaviour.instance.FocusOnInputField();
+                    string currentInputFieldText = ConsoleBehaviour.instance.inputInputField.text;
+                    ConsoleBehaviour.instance.SetTextOfInputInputField(currentInputFieldText + " " + value);
                 });
                 instance.GetComponentInChildren<TMP_Text>().text = value;
             }
-
-            
         }
         
         private void OnStopPredict()
