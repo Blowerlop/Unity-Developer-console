@@ -6,6 +6,7 @@ using System.Reflection;
 using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 
@@ -58,14 +59,25 @@ namespace DeveloperConsole
                 
             }
 
-            if (_allCommandsName.Any() == false)
-            {
-                ClearPrediction();
-                return;
-            }
+            if (_allCommandsName.Any() == false) return;
             
             ComputePrediction(input, splitInput, _allCommandsName.First(), 0);
-            GeneratePredictionButtons(_allCommandsName);
+
+            if (commandInput == currentPrediction)
+            {
+                PredictParameters(splitInput);
+                return;
+            }
+
+            if (!IsWritingParameter(splitInput))
+            {
+                GeneratePredictionButtons(_allCommandsName);
+            }
+        }
+
+        private bool IsWritingParameter(string[] splitInput)
+        {
+            return splitInput.Length > 1;
         }
 
         private void ComputePrediction(string input, IReadOnlyList<string> splitInput, string predictionName, uint index)
@@ -82,52 +94,65 @@ namespace DeveloperConsole
             this.index = index;
 
             PredictCommand(input, splitInput[0]);
-            PredictParameters(splitInput);
             
             onPredict?.Invoke(ConsoleBehaviour.instance.commands[currentPrediction], splitInput.Count - 1);
         }
 
         private void PredictParameters(IReadOnlyCollection<string> splitInput)
         {
-            for (int i = splitInput.Count - 1; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
+            string text = currentPrediction;
+
+            int currentParameterIndex;
+            if (splitInput.Count == 1) currentParameterIndex = 0;
+            else currentParameterIndex = splitInput.Count - 2;
+            
+            for (int i = 0; i < ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo.Length; i++)
             {
                 ParameterInfo parameterInfo = ConsoleBehaviour.instance.commands[currentPrediction].parametersInfo[i];
-                PredictParameter(parameterInfo);
-            }
-        }
 
-        private void PredictParameter(ParameterInfo parameterInfo)
-        {
-            if (parameterInfo.HasDefaultValue)
-            {
-                // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>(Optional)";
-                _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}(Optional)";
+                if (currentParameterIndex == i ) text += "<b>";
+                
+                text += $" {parameterInfo.Name}({parameterInfo.ParameterType.Name})";
+                
+                if (parameterInfo.HasDefaultValue)
+                {
+                    // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>(Optional)";
+                    text += "(Optional)";
+                }
+                
+                if (currentParameterIndex == i) text += "</b>";
             }
-            else
-            {
-                // _inputFieldPredictionPlaceHolder.text += $" <{parameterType.Name}>";
-                _inputFieldPredictionPlaceHolder.text += $" {parameterInfo.Name}";
-            }
+            
+            InstantiateButton(text, null);
         }
 
         private void PredictCommand(string input, string commandInput)
         {
             int commandInputLength = commandInput.Length;
-
-            string preWriteCommandName = currentPrediction.Substring(0, commandInputLength);
-            string nonWriteCommandName = currentPrediction.Substring(commandInputLength);
             
             // Correct user input to match the command name
-            ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(input.Remove(0, commandInputLength).Insert(0, currentPrediction.Substring(0, commandInputLength)));
+            if (input != currentPrediction)
+            {
+                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(input.Remove(0, commandInputLength).Insert(0, currentPrediction.Substring(0, commandInputLength)));
+            }
+            
+            string preWriteCommandName = currentPrediction.Substring(0, commandInputLength);
+            string nonWriteCommandName = currentPrediction.Substring(commandInputLength);
 
             if (string.IsNullOrEmpty(nonWriteCommandName))
             {
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{input}</color>";
+                OnCommandPredicted();
             }
             else
             {
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{preWriteCommandName}</color>{nonWriteCommandName}";
             }
+        }
+        
+        private void OnCommandPredicted()
+        {
+            
         }
         
         
@@ -159,6 +184,16 @@ namespace DeveloperConsole
             });
             instance.GetComponentInChildren<TMP_Text>().text = predictionName;
         }
+
+        private Button InstantiateButton(string content, UnityAction onClick)
+        {
+            Button instance = Instantiate(_template, _gameObject.transform);
+            instance.GetComponentInChildren<TMP_Text>().text = content;
+            
+            if (onClick != null) instance.onClick.AddListener(onClick);
+
+            return instance;
+        }   
 
         private void ClearPrediction()
         {
