@@ -1407,11 +1407,11 @@ MonoBehaviour:
   - rid: 7460716656807641094
   - rid: 7460716656807641095
   - rid: 7460716656807641096
-  - rid: 1228592230269452291
+  - rid: 1228592276666318848
   references:
     version: 2
     RefIds:
-    - rid: 1228592230269452291
+    - rid: 1228592276666318848
       type: {class: NavigateTroughPredictionInputBehaviour, ns: DeveloperConsole, asm: Assembly-CSharp}
       data:
         _inputAction:

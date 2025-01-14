@@ -23,14 +23,14 @@ namespace DeveloperConsole
 
         private void OnEnable()
         {
-            _consoleCommandPrediction.onPredictParameter += OnPredictParameter;
-            _consoleCommandPrediction.onStopPredict += OnStopPredict;
+            // _consoleCommandPrediction.onPredictParameter += OnPredictParameter;
+            // _consoleCommandPrediction.onStopPredict += OnStopPredict;
         }
 
         private void OnDisable()
         {
-            _consoleCommandPrediction.onPredictParameter -= OnPredictParameter;
-            _consoleCommandPrediction.onStopPredict -= OnStopPredict;
+            // _consoleCommandPrediction.onPredictParameter -= OnPredictParameter;
+            // _consoleCommandPrediction.onStopPredict -= OnStopPredict;
         }
         
         

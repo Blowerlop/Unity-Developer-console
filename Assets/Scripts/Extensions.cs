@@ -84,5 +84,33 @@ namespace DeveloperConsole
                 return list[index];
             }
         }
+        
+        public static class StringExtensions
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <returns>If found, return character index, otherwise return -1</returns>
+            public static int Find(this string str, char character)
+            {
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (str[i] == character) return i;
+                }
+
+                return -1;
+            }
+            
+            public static int Count(this string str, char character)
+            {
+                int count = 0;
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (str[i] == character) count++;
+                }
+
+                return count;
+            }
+        }
     }
 }
