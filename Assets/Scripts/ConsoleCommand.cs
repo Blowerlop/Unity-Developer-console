@@ -6,9 +6,35 @@ namespace DeveloperConsole
     [Serializable]
     public class ConsoleCommand
     {
+        public struct Parameter
+        {
+            public struct Attributes
+            {
+                public ParameterResolverAttribute parameterResolver;
+                public ParameterGetter parameterGetter;
+            }
+            
+            
+            public readonly ParameterInfo info;
+            public readonly Attributes attributes;
+            
+            
+            public Parameter(ParameterInfo info)
+            {
+                this.info = info;
+                
+                attributes = new Attributes
+                {
+                    parameterResolver = info.GetCustomAttribute<ParameterResolverAttribute>(),
+                    parameterGetter = info.GetCustomAttribute<ParameterGetter>()
+                };
+            }
+        }
+        
+        
         public string name { get; private set; }
-        public ParameterInfo[] parametersInfo { get; private set; }
         private MethodInfo _methodInfo;
+        public Parameter[] parameters { get; private set; }
         public uint parametersWithDefaultValue { get; private set; }
         public string description { get; private set; }
         
@@ -33,7 +59,15 @@ namespace DeveloperConsole
         private void SetupFinalParameters(MethodInfo methodInfo)
         {
             _methodInfo = methodInfo;
-            parametersInfo = methodInfo.GetParameters();
+            
+            var parametersInfos = methodInfo.GetParameters();
+            parameters = new Parameter[parametersInfos.Length];
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                Parameter parameter = new(parametersInfos[i]);
+                parameters[i] = parameter;
+            }
+            
             HasParametersInfoHaveDefaultValue();
         }
 
@@ -44,9 +78,9 @@ namespace DeveloperConsole
         
         private void HasParametersInfoHaveDefaultValue()
         {
-            for (int i = 0; i < parametersInfo.Length; i++)
+            for (int i = 0; i < parameters.Length; i++)
             {
-                if (parametersInfo[i].HasDefaultValue)
+                if (parameters[i].info.HasDefaultValue)
                 {
                     parametersWithDefaultValue++;
                 }

@@ -32,7 +32,7 @@ namespace DeveloperConsole.Inputs
         
         private void AutoCompleteTextWithThePrediction()
         {
-            consoleBehaviourInstance.SetTextOfInputInputField(_commandPrediction.currentPrediction);
+            consoleBehaviourInstance.SetTextOfInputInputField(_commandPrediction.currentPrediction.name);
         }
     }
 }
