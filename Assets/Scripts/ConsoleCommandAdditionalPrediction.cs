@@ -4,6 +4,7 @@ using System.Text;
 using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace DeveloperConsole.Inputs
@@ -14,6 +15,7 @@ namespace DeveloperConsole.Inputs
         private ConsoleCommandPrediction _commandPrediction;
         
         private List<ConsoleCommand> _commandsName;
+        public int index { get; private set; } = -1;
         
         [SerializeField] private GameObject _commandButtonsContainer;
         [SerializeField] private Button _commandButtonTemplate;
@@ -50,6 +52,7 @@ namespace DeveloperConsole.Inputs
             if (_commandsName.Count == 0) return;
             
             CreateCommandButtons();
+            index = -1;
         }
         
         private void OnPredictionEnd()
@@ -81,6 +84,9 @@ namespace DeveloperConsole.Inputs
 
         private void CreateCommandButton(ConsoleCommand consoleCommand)
         {
+            index++;
+            int localIndexCopy = index;
+            
             var button = Instantiate(_commandButtonTemplate, _commandButtonsContainer.transform);
             
             StringBuilder stringBuilder = new StringBuilder();
@@ -100,13 +106,25 @@ namespace DeveloperConsole.Inputs
                 _commandPrediction.ClearInputFieldPrediction();
                 ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(consoleCommand.name);
                 ConsoleBehaviour.instance.FocusOnInputField();
+                index = localIndexCopy;
             });
+        }
+
+        public void SelectButton(int index)
+        {
+            _commandButtonsContainer.transform.GetChild(index).GetComponent<Button>().OnPointerClick(new PointerEventData(EventSystem.current));
+        }
+        
+        public int GetButtonsCount()
+        {
+            return _commandButtonsContainer.transform.childCount;
         }
 
         private void Clear()
         {
             _commandsName.Clear();
             _commandButtonsContainer.DestroyChildren();
+            index = -1;
         }
     }
 }
