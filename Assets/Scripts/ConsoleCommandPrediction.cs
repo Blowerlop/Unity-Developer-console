@@ -1,10 +1,7 @@
 using System;
-using System.Globalization;
-using System.Linq;
 using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 namespace DeveloperConsole
@@ -14,7 +11,7 @@ namespace DeveloperConsole
         public struct EventArgs
         {
             public string commandInput;
-            public string commandName;
+            public ConsoleCommand command;
         }
         
         
@@ -52,8 +49,8 @@ namespace DeveloperConsole
             
             ReadOnlySpan<char> commandInput = input.AsSpan();
             
-            ReadOnlySpan<char> predictedCommandName = RetrieveCommandNameThatStartWith(commandInput);
-            if (predictedCommandName.IsEmpty)
+            ConsoleCommand predictedCommandName = RetrieveCommandThatStartWith(commandInput);
+            if (predictedCommandName == null)
             {
                 if (HasAPrediction()) Clear();
                 return;
@@ -62,7 +59,7 @@ namespace DeveloperConsole
             PredictCommand(commandInput, predictedCommandName);
         }
 
-        private ReadOnlySpan<char> RetrieveCommandNameThatStartWith(ReadOnlySpan<char> commandInput)
+        private ConsoleCommand RetrieveCommandThatStartWith(ReadOnlySpan<char> commandInput)
         {
             for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
             {
@@ -70,29 +67,30 @@ namespace DeveloperConsole
                 
                 if (commandName.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return commandName;
+                    return ConsoleBehaviour.instance.commands[commandName.ToString()];
                 }
             }
 
-            return ReadOnlySpan<char>.Empty;
+            return null;
         }
 
 
-        private void PredictCommand(ReadOnlySpan<char> commandInput, ReadOnlySpan<char> predictedCommandName)
+        private void PredictCommand(ReadOnlySpan<char> commandInput, ConsoleCommand consoleCommand)
         {
             int commandInputLength = commandInput.Length;
+            string consoleCommandName = consoleCommand.name;
 
             string newCommandInput;
             // Correct user input to match the command name
-            if (!commandInput.SequenceEqual(predictedCommandName))
+            if (!commandInput.SequenceEqual(consoleCommandName))
             {
-                newCommandInput = predictedCommandName[..commandInputLength].ToString();
+                newCommandInput = consoleCommandName[..commandInputLength];
                 ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(newCommandInput);
             }
             else newCommandInput = commandInput.ToString();
             
-            string preWriteCommandName = predictedCommandName[..commandInputLength].ToString();
-            string nonWriteCommandName = predictedCommandName[commandInputLength..].ToString();
+            string preWriteCommandName = consoleCommandName[..commandInputLength];
+            string nonWriteCommandName = consoleCommandName[commandInputLength..];
 
             if (string.IsNullOrEmpty(nonWriteCommandName))
             {
@@ -102,10 +100,10 @@ namespace DeveloperConsole
             {
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{preWriteCommandName}</color>{nonWriteCommandName}";
             }
+
+            currentPrediction = consoleCommandName;
             
-            currentPrediction = predictedCommandName.ToString();
-            
-            onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, commandName = currentPrediction});
+            onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, command = consoleCommand});
         }
 
         private void Clear()

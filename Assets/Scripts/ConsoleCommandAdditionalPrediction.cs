@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace DeveloperConsole.Inputs
     {
         private ConsoleCommandPrediction _commandPrediction;
         
-        private List<string> _commandsName;
+        private List<ConsoleCommand> _commandsName;
         [SerializeField] private GameObject _commandButtonsContainer;
         [SerializeField] private Button _commandButtonTemplate;
 
@@ -24,7 +25,7 @@ namespace DeveloperConsole.Inputs
 
         private void Start()
         {
-            _commandsName = new List<string>(ConsoleBehaviour.instance.commandsName.Length / 4);
+            _commandsName = new List<ConsoleCommand>(ConsoleBehaviour.instance.commandsName.Length / 4);
         }
 
         private void OnEnable()
@@ -59,11 +60,12 @@ namespace DeveloperConsole.Inputs
         {
             for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
             {
-                var commandName = ConsoleBehaviour.instance.commandsName[i].AsSpan();
+                string commandName = ConsoleBehaviour.instance.commandsName[i];
+                var commandNameSpan = ConsoleBehaviour.instance.commandsName[i].AsSpan();
                 
-                if (commandName.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
+                if (commandNameSpan.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    _commandsName.Add(commandName.ToString());
+                    _commandsName.Add(ConsoleBehaviour.instance.commands[commandName]);
                 }
             }
         }
@@ -76,14 +78,26 @@ namespace DeveloperConsole.Inputs
             }
         }
 
-        private void CreateCommandButton(string commandName)
+        private void CreateCommandButton(ConsoleCommand consoleCommand)
         {
             var button = Instantiate(_commandButtonTemplate, _commandButtonsContainer.transform);
-            button.GetComponentInChildren<TMP_Text>().text = commandName;
+            
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(consoleCommand.name);
+            
+            for (int i = 0; i < consoleCommand.parameters.Length; i++)
+            {
+                if (consoleCommand.parameters[i].attributes.parameterGetter == null) continue;
+                
+                stringBuilder.Append(" ");
+                stringBuilder.Append(consoleCommand.parameters[i].attributes.parameterGetter.Resolve());
+            }
+            
+            button.GetComponentInChildren<TMP_Text>().text = stringBuilder.ToString();
             button.onClick.AddListener(() =>
             {
                 _commandPrediction.ClearInputFieldPrediction();
-                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(commandName);
+                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(consoleCommand.name);
                 ConsoleBehaviour.instance.FocusOnInputField();
             });
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using UnityEngine;
 
 namespace DeveloperConsole
@@ -6,28 +7,40 @@ namespace DeveloperConsole
     [AttributeUsage(AttributeTargets.Parameter)]
     public class ParameterResolverAttribute : Attribute
     {
-        private Func<string[]> _func;    
+        private readonly Type _correctType = typeof(string[]);
+        private readonly Func<string[]> _func;    
         
         
         public ParameterResolverAttribute(Type targetType, string targetMethodName)
         {
-            _func = () => (string[]) targetType.GetMethod(targetMethodName)?.Invoke(null, null);
+            var methodInfo = targetType.GetMethod(targetMethodName, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            if (methodInfo == null || methodInfo.ReturnType != _correctType || !methodInfo.IsStatic)
+            {
+                throw new InvalidOperationException("The target method must be static and return a string array.");
+            }
+            
+            _func = (Func<string[]>)Delegate.CreateDelegate(typeof(Func<string[]>), methodInfo);
         }
 
         public ParameterResolverAttribute(Type type)
         {
-            GenerateFuncByType(type);
-        }
+            GenerateFuncByType(out _func);
+            return;
 
-        private void GenerateFuncByType(Type type)
-        {
-            if (type.IsEnum)
+            
+            // --- Local methods ---
+            void GenerateFuncByType(out Func<string[]> func)
             {
-                _func = () => Enum.GetNames(type);
-            }
-            else
-            {
-                Debug.LogError($"{type.Name} is not supported. Cannot generate function");
+                if (type.IsEnum)
+                {
+                    func = () => Enum.GetNames(type);
+                }
+                else
+                {
+                    Debug.LogError($"{type.Name} is not supported. Cannot generate function");
+                }
+
+                func = null;
             }
         }
 

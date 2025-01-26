@@ -109,12 +109,12 @@ namespace DeveloperConsole
             if (commands.TryGetValue(splitInput[0], out ConsoleCommand command))
             {
                 // Check if the command have the same number of parameters that the player input
-                object[] parameters = new object[command.parametersInfo.Length];
+                object[] parameters = new object[command.parameters.Length];
 
                 int commandsSplitInputLength = splitInput.Length - 1;
-                if (commandsSplitInputLength > command.parametersInfo.Length || (commandsSplitInputLength < command.parametersInfo.Length && commandsSplitInputLength < command.parametersInfo.Length - command.parametersWithDefaultValue))
+                if (commandsSplitInputLength > command.parameters.Length || (commandsSplitInputLength < command.parameters.Length && commandsSplitInputLength < command.parameters.Length - command.parametersWithDefaultValue))
                 {
-                    int commandParametersLength = command.parametersInfo.Length;
+                    int commandParametersLength = command.parameters.Length;
 
                     switch (commandParametersLength)
                     {
@@ -163,11 +163,11 @@ namespace DeveloperConsole
             
             bool TryParseParameter(int i, out object parameterResult)
             {
-                Type parameterType = command.parametersInfo[i].ParameterType;
+                Type parameterType = command.parameters[i].info.ParameterType;
                 
                 if (i + 1 >= splitInput.Length)
                 {
-                    parameterResult = command.parametersInfo[i].DefaultValue;
+                    parameterResult = command.parameters[i].info.DefaultValue;
                     return true;
                 }
 
@@ -420,7 +420,9 @@ namespace DeveloperConsole
                 catch (System.IO.FileNotFoundException) { }
                 catch (Exception e)
                 {
-                    Debug.LogError("Error whilst searching for developer console attributes in assembly(" + assemblyName + "): " + e.Message + ".");
+                    Debug.LogError(
+                        $"Error whilst searching for developer console attributes in assembly({assemblyName}): {e.Message}. " +
+                        $"\nStackTrace: {e.StackTrace}");
                 }
             }
             
