@@ -11,11 +11,18 @@ namespace DeveloperConsole
 {
     public class ConsoleCommandPrediction : MonoBehaviour
     {
+        public struct EventArgs
+        {
+            public string commandInput;
+            public string commandName;
+        }
+        
+        
         [SerializeField] private TMP_Text _inputFieldPredictionPlaceHolder;
-        [SerializeField] private GameObject _gameObject;
-        [SerializeField] private Button _template;
-
         public string currentPrediction { get; private set; }
+        
+        public Action<EventArgs> onPredictionStart;
+        public Action onPredictionEnd;
         
         
         private void OnEnable()
@@ -30,17 +37,27 @@ namespace DeveloperConsole
 
         private void Predict(string input)
         {
-            ClearPrediction();
+            if (string.IsNullOrEmpty(input))
+            {
+                if (HasAPrediction()) Clear();
+                return;
+            }
 
-            if (string.IsNullOrEmpty(input)) return;
-            
-            if (input.Count(' ') > 1) return;
+            if (input.Count(' ') > 1)
+            {
+                if (HasAPrediction()) Clear();
+                return;
+            }
             
             
             ReadOnlySpan<char> commandInput = input.AsSpan();
             
             ReadOnlySpan<char> predictedCommandName = RetrieveCommandNameThatStartWith(commandInput);
-            if (predictedCommandName.IsEmpty) return;
+            if (predictedCommandName.IsEmpty)
+            {
+                if (HasAPrediction()) Clear();
+                return;
+            }
 
             PredictCommand(commandInput, predictedCommandName);
         }
@@ -87,13 +104,21 @@ namespace DeveloperConsole
             }
             
             currentPrediction = predictedCommandName.ToString();
+            
+            onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, commandName = currentPrediction});
         }
 
-        private void ClearPrediction()
+        private void Clear()
         {
             currentPrediction = string.Empty;
+            ClearInputFieldPrediction();
+            
+            onPredictionEnd?.Invoke();
+        }
+        
+        public void ClearInputFieldPrediction()
+        {
             _inputFieldPredictionPlaceHolder.text = string.Empty;
-            _gameObject.DestroyChildren();
         }
 
         public bool HasAPrediction() => currentPrediction != string.Empty;
