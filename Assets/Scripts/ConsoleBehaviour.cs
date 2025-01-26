@@ -223,9 +223,9 @@ namespace DeveloperConsole
             currentHistoryIndex = -1;
         }
 
-        public static void AddCommand(ConsoleCommand consoleCommand)
+        public void AddCommand(ConsoleCommand consoleCommand)
         {
-            instance.commands.Add(consoleCommand.name, consoleCommand);
+            commands.Add(consoleCommand.name, consoleCommand);
         }
 
         #endregion

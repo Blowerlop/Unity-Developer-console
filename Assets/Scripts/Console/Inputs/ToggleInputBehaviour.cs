@@ -13,8 +13,8 @@ namespace DeveloperConsole.Inputs
         
         public void ToggleConsole()
         {
-            if (consoleBehaviourInstance.isConsoleEnabled) consoleBehaviourInstance.Hide();
-            else consoleBehaviourInstance.Show();
+            if (consoleBehaviourInstance.isConsoleEnabled) Console.Hide();
+            else Console.Show();
         }
     }
 }
