@@ -156,9 +156,6 @@ namespace DeveloperConsole
                         newWidth = sizeDelta.x - scaledEventDataDelta.x;
                         
                         deltaPosX = -(newWidth - sizeDelta.x) * _target.pivot.x;
-                        
-                        _target.sizeDelta = new Vector2(newWidth, _target.sizeDelta.y);
-                        _target.anchoredPosition += new Vector2(deltaPosX, 0);
                     }
                     else
                     {
@@ -180,10 +177,10 @@ namespace DeveloperConsole
                         }
                         
                         deltaPosX = (newWidth - sizeDelta.x) * _target.pivot.x;
-
-                        _target.sizeDelta = new Vector2(newWidth, _target.sizeDelta.y);
-                        _target.anchoredPosition += new Vector2(deltaPosX, 0);
                     }
+
+                    _target.sizeDelta = new Vector2(newWidth, _target.sizeDelta.y);
+                    _target.anchoredPosition += new Vector2(deltaPosX, 0);
                 }
                 if (verticalEdge != null)
                 {
@@ -195,18 +192,15 @@ namespace DeveloperConsole
                     {
                         newHeight = sizeDelta.y - scaledEventDataDelta.y;
                         deltaPosY = -(newHeight - sizeDelta.y) * _target.pivot.y;
-                
-                        _target.sizeDelta = new Vector2(_target.sizeDelta.x, newHeight);
-                        _target.anchoredPosition += new Vector2(0, deltaPosY);
                     }
                     else
                     {
                         newHeight = sizeDelta.y + scaledEventDataDelta.y;
                         deltaPosY = (newHeight - sizeDelta.y) * _target.pivot.y;
-                
-                        _target.sizeDelta = new Vector2(_target.sizeDelta.x, newHeight);
-                        _target.anchoredPosition += new Vector2(0, deltaPosY);
                     }
+
+                    _target.sizeDelta = new Vector2(_target.sizeDelta.x, newHeight);
+                    _target.anchoredPosition += new Vector2(0, deltaPosY);
                 }
             }
         }
