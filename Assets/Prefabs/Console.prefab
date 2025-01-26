@@ -1325,10 +1325,10 @@ GameObject:
   m_Component:
   - component: {fileID: 813319985089124156}
   - component: {fileID: 7568533013786001867}
+  - component: {fileID: 4219441636944996306}
   - component: {fileID: 4293194040823235706}
   - component: {fileID: 7885521759889867675}
-  - component: {fileID: 4219441636944996306}
-  - component: {fileID: 7890271410416481425}
+  - component: {fileID: 5815741957156517783}
   m_Layer: 0
   m_Name: Console
   m_TagString: Untagged
@@ -1374,33 +1374,6 @@ MonoBehaviour:
   <logScrollRect>k__BackingField: {fileID: 2934192161782301022}
   <logInputField>k__BackingField: {fileID: 7075882152759586708}
   <inputInputField>k__BackingField: {fileID: 3861899467939701326}
---- !u!114 &4293194040823235706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2346266705016090110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba088bfbd49f2b84f81d15fc1a24aca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputFieldPredictionPlaceHolder: {fileID: 8690790590487268149}
---- !u!114 &7885521759889867675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2346266705016090110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 740f74618a194ce281f1075146d5ab8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _commandButtonsContainer: {fileID: 6455151232256124146}
-  _commandButtonTemplate: {fileID: 3487362531849110068, guid: cb5047987f95ad640bafca0aa07a5240, type: 3}
 --- !u!114 &4219441636944996306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1609,7 +1582,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 0
           m_Flags: 0
---- !u!114 &7890271410416481425
+--- !u!114 &4293194040823235706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1618,11 +1591,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 2346266705016090110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0308352047c5491692141b4d37e8e09b, type: 3}
+  m_Script: {fileID: 11500000, guid: ba088bfbd49f2b84f81d15fc1a24aca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameObject: {fileID: 1972405937382818871}
-  _template: {fileID: 3487362531849110068, guid: cb5047987f95ad640bafca0aa07a5240, type: 3}
+  _inputFieldPredictionPlaceHolder: {fileID: 8690790590487268149}
+--- !u!114 &7885521759889867675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346266705016090110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740f74618a194ce281f1075146d5ab8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _commandButtonsContainer: {fileID: 6455151232256124146}
+  _commandButtonTemplate: {fileID: 3487362531849110068, guid: cb5047987f95ad640bafca0aa07a5240, type: 3}
+--- !u!114 &5815741957156517783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346266705016090110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b95f7c70a9bd4a558f2c38f6290f72d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _commandButtonsContainer: {fileID: 1972405937382818871}
+  _commandButtonTemplate: {fileID: 3487362531849110068, guid: cb5047987f95ad640bafca0aa07a5240, type: 3}
 --- !u!1 &2711934960833532717
 GameObject:
   m_ObjectHideFlags: 0
