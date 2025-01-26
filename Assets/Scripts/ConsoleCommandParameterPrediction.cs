@@ -73,7 +73,7 @@ namespace DeveloperConsole
             
             ConsoleCommand.Parameter parameter = parameters[parameterCount - 1];
             
-            CreateParameterButtons(parameter.attributes.parameterResolver.Resolve());
+            CreateParameterButtons(parameter.attributes.consoleParameterInput.Resolve());
         }
         
         private void CreateParameterButtons(string[] parametersValue)

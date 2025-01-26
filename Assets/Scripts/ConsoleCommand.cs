@@ -10,8 +10,8 @@ namespace DeveloperConsole
         {
             public struct Attributes
             {
-                public ParameterResolverAttribute parameterResolver;
-                public ParameterGetter parameterGetter;
+                public ConsoleParameterInputAttribute consoleParameterInput;
+                public ConsoleParameterOutputAttribute consoleParameterOutputAttribute;
             }
             
             
@@ -25,8 +25,8 @@ namespace DeveloperConsole
                 
                 attributes = new Attributes
                 {
-                    parameterResolver = info.GetCustomAttribute<ParameterResolverAttribute>(),
-                    parameterGetter = info.GetCustomAttribute<ParameterGetter>()
+                    consoleParameterInput = info.GetCustomAttribute<ConsoleParameterInputAttribute>(),
+                    consoleParameterOutputAttribute = info.GetCustomAttribute<ConsoleParameterOutputAttribute>()
                 };
             }
         }

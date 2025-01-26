@@ -94,10 +94,10 @@ namespace DeveloperConsole.Inputs
             
             for (int i = 0; i < consoleCommand.parameters.Length; i++)
             {
-                if (consoleCommand.parameters[i].attributes.parameterGetter == null) continue;
+                if (consoleCommand.parameters[i].attributes.consoleParameterOutputAttribute == null) continue;
                 
                 stringBuilder.Append(" ");
-                stringBuilder.Append(consoleCommand.parameters[i].attributes.parameterGetter.Resolve());
+                stringBuilder.Append(consoleCommand.parameters[i].attributes.consoleParameterOutputAttribute.Resolve());
             }
             
             button.GetComponentInChildren<TMP_Text>().text = stringBuilder.ToString();

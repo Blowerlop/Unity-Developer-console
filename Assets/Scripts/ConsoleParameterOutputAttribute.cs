@@ -4,11 +4,12 @@ using System.Reflection;
 namespace DeveloperConsole
 {
     [AttributeUsage(AttributeTargets.Parameter)]
-    public class ParameterGetter : Attribute
+    public class ConsoleParameterOutputAttribute : Attribute
     {
         private readonly Func<string> _func;
 
-        public ParameterGetter(Type targetType, string target)
+        
+        public ConsoleParameterOutputAttribute(Type targetType, string target)
         {
             var memberInfo = targetType.GetMember(target, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)[0];
 
@@ -23,7 +24,7 @@ namespace DeveloperConsole
                 FieldInfo fieldInfo when fieldInfo.FieldType != typeof(string) => throw new InvalidOperationException("The target field must be a string."),
                 FieldInfo fieldInfo => () => (string)fieldInfo.GetValue(null),
                 
-                _ => throw new InvalidOperationException("The target must be a method, property or field.")
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
