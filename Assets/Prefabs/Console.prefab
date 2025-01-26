@@ -1387,65 +1387,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistantInputs:
-  - rid: 7460716656807641092
+  - rid: 1228592689637490688
   _nonPersistantInputs:
-  - rid: 7460716656807641093
-  - rid: 7460716656807641094
-  - rid: 7460716656807641095
-  - rid: 7460716656807641096
-  - rid: 1228592276666318848
+  - rid: 1228592689637490689
+  - rid: 1228592689637490690
+  - rid: 1228592689637490691
+  - rid: 1228592689637490692
+  - rid: 1228592689718493184
   references:
     version: 2
     RefIds:
-    - rid: 1228592276666318848
-      type: {class: NavigateTroughPredictionInputBehaviour, ns: DeveloperConsole, asm: Assembly-CSharp}
+    - rid: 1228592689637490688
+      type: {class: ToggleInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: 16477a9d-88bf-4e03-a823-5f6bdfa021ea
-          m_Processors: 
-          m_Interactions: 
-          m_SingletonActionBindings:
-          - m_Name: 1D Axis
-            m_Id: 7dd32f89-798a-4d01-86c0-65e8899bf744
-            m_Path: 1DAxis
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 4
-          - m_Name: negative
-            m_Id: 81638b8a-27ca-4050-ad5b-808fe17187e2
-            m_Path: <Keyboard>/downArrow
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 8
-          - m_Name: positive
-            m_Id: 7550375f-aa28-4766-b3aa-b4de6d341555
-            m_Path: <Keyboard>/upArrow
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 8
-          m_Flags: 0
-    - rid: 7460716656807641092
-      type: {class: ToggleInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
-      data:
-        _inputAction:
-          m_Name: Input
-          m_Type: 1
-          m_ExpectedControlType: Button
-          m_Id: 79dac815-b9c3-481e-99df-c46626a651bc
+          m_Id: b301fa74-e7d0-49d3-b745-712e4b52225b
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: 
-            m_Id: 88037b8e-dfde-43fd-89f3-74740e5142f0
+            m_Id: ffbc7752-b10a-40f9-af9a-64dc591dd962
             m_Path: <Keyboard>/backquote
             m_Interactions: 
             m_Processors: 
@@ -1453,19 +1417,75 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 0
           m_Flags: 0
-    - rid: 7460716656807641093
-      type: {class: LogResizeInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
+    - rid: 1228592689637490689
+      type: {class: NavigateTroughPredictionInputBehaviour, ns: DeveloperConsole, asm: Console}
       data:
         _inputAction:
           m_Name: Input
-          m_Type: 1
-          m_ExpectedControlType: Button
-          m_Id: 43150303-118e-407b-b167-cc1ed6b01b5d
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 2d71e5cf-2514-4f5b-b5d5-54f4a1d54fa1
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 1D Axis
+            m_Id: 7a9ceab5-b95b-4d5e-a4f2-ae53bd829103
+            m_Path: 1DAxis
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: negative
+            m_Id: 041e63bf-9f94-40b1-9758-beff8b07fc84
+            m_Path: <Keyboard>/downArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: positive
+            m_Id: 94f6d336-2eec-4433-915a-abc4b9443160
+            m_Path: <Keyboard>/upArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
+    - rid: 1228592689637490690
+      type: {class: CompleteCommandPredictionInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: d77face1-93b6-4f72-9f9c-4f202378a367
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 
+            m_Id: 186b9910-a01b-44a4-a848-2e4129a1f5b5
+            m_Path: <Keyboard>/tab
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 0
+          m_Flags: 0
+    - rid: 1228592689637490691
+      type: {class: FastDeleteInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 31678768-2c41-4849-bbb3-436af66fdb2f
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: One Modifier
-            m_Id: 71a6b648-f420-443b-8221-d48a78ef9c8e
+            m_Id: 643c5e40-b8eb-41d9-b0c6-a5b0a7a1c715
             m_Path: OneModifier
             m_Interactions: 
             m_Processors: 
@@ -1473,7 +1493,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 4
           - m_Name: modifier
-            m_Id: d6cd887c-ceb8-4319-9cb5-8a58a7104bd2
+            m_Id: 3cae9a93-788e-4828-b713-196fafd80442
             m_Path: <Keyboard>/leftCtrl
             m_Interactions: 
             m_Processors: 
@@ -1481,7 +1501,43 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           - m_Name: binding
-            m_Id: e418a625-e5ae-4533-9e29-67e6e26c9ecd
+            m_Id: 66b0da6e-e917-4046-ad40-534d6ef42eb6
+            m_Path: <Keyboard>/backspace
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
+    - rid: 1228592689637490692
+      type: {class: LogResizeInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 7087e446-5f66-4755-95c5-d3c16ef57070
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: One Modifier
+            m_Id: c88b3786-ea91-4c2c-9eee-27ea74279028
+            m_Path: OneModifier
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: modifier
+            m_Id: 53081631-7fdc-4512-a5ba-23723d7be37d
+            m_Path: <Keyboard>/leftCtrl
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: binding
+            m_Id: 5ac1e6fe-396f-4d3a-8b74-e3ea8a6c39b0
             m_Path: <Mouse>/scroll
             m_Interactions: 
             m_Processors: 
@@ -1490,55 +1546,19 @@ MonoBehaviour:
             m_Flags: 8
           m_Flags: 0
         _fontSizeRange: {x: 20, y: 60}
-    - rid: 7460716656807641094
-      type: {class: FastDeleteInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
-      data:
-        _inputAction:
-          m_Name: Input
-          m_Type: 1
-          m_ExpectedControlType: Button
-          m_Id: ed09d6d9-0517-4686-a7dd-181fad450f83
-          m_Processors: 
-          m_Interactions: 
-          m_SingletonActionBindings:
-          - m_Name: One Modifier
-            m_Id: 54263571-556d-457f-9767-b618757b4e2b
-            m_Path: OneModifier
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 4
-          - m_Name: modifier
-            m_Id: a621a1ee-40a2-47d7-86fe-f9093da96316
-            m_Path: <Keyboard>/leftCtrl
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 8
-          - m_Name: binding
-            m_Id: 2fe2e7f7-9fbd-43f3-b8bd-374ec3fe09f4
-            m_Path: <Keyboard>/backspace
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 8
-          m_Flags: 0
-    - rid: 7460716656807641095
-      type: {class: NavigateHistoryInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
+    - rid: 1228592689718493184
+      type: {class: NavigateHistoryInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: 16477a9d-88bf-4e03-a823-5f6bdfa021ea
+          m_Id: 60e7adc4-f8dc-4e3b-93ea-927545b5cb43
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: 1D Axis
-            m_Id: 7dd32f89-798a-4d01-86c0-65e8899bf744
+            m_Id: 3a6e46ce-ec34-40fe-acb7-ce2d25528b6d
             m_Path: 1DAxis
             m_Interactions: 
             m_Processors: 
@@ -1546,7 +1566,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 4
           - m_Name: negative
-            m_Id: 81638b8a-27ca-4050-ad5b-808fe17187e2
+            m_Id: b4096ef4-2f8a-4c7e-9387-1c19d4f74d5c
             m_Path: <Keyboard>/downArrow
             m_Interactions: 
             m_Processors: 
@@ -1554,33 +1574,13 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           - m_Name: positive
-            m_Id: 7550375f-aa28-4766-b3aa-b4de6d341555
+            m_Id: 85605459-efb4-45c4-934d-ba574c39e133
             m_Path: <Keyboard>/upArrow
             m_Interactions: 
             m_Processors: 
             m_Groups: 
             m_Action: Input
             m_Flags: 8
-          m_Flags: 0
-    - rid: 7460716656807641096
-      type: {class: CompleteCommandPredictionInputBehaviour, ns: DeveloperConsole.Inputs, asm: Assembly-CSharp}
-      data:
-        _inputAction:
-          m_Name: Input
-          m_Type: 1
-          m_ExpectedControlType: Button
-          m_Id: 99068f10-5024-4ce1-a4b3-6eab57c9b543
-          m_Processors: 
-          m_Interactions: 
-          m_SingletonActionBindings:
-          - m_Name: 
-            m_Id: 3993100f-1160-4cdf-b757-b309aaa2cc04
-            m_Path: <Keyboard>/tab
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 0
           m_Flags: 0
 --- !u!114 &4293194040823235706
 MonoBehaviour:

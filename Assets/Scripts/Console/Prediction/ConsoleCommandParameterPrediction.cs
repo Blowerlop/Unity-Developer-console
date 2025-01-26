@@ -4,6 +4,7 @@ using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using StringExtensions = DeveloperConsole.Extensions.StringExtensions;
 
 namespace DeveloperConsole
 {
