@@ -14,6 +14,7 @@ namespace DeveloperConsole.Inputs
         private ConsoleCommandPrediction _commandPrediction;
         
         private List<ConsoleCommand> _commandsName;
+        
         [SerializeField] private GameObject _commandButtonsContainer;
         [SerializeField] private Button _commandButtonTemplate;
 

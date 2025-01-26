@@ -257,6 +257,7 @@ namespace DeveloperConsole
         public void FocusOnInputField()
         {
             inputInputField.ActivateInputField();
+            MoveCaretToTheEndOfTheText();
         }
         
         

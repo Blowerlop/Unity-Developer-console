@@ -38,9 +38,8 @@ namespace DeveloperConsole
                 else
                 {
                     Debug.LogError($"{type.Name} is not supported. Cannot generate function");
+                    func = null;
                 }
-
-                func = null;
             }
         }
 

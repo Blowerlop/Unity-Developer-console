@@ -16,9 +16,10 @@ namespace DeveloperConsole
         
         
         [SerializeField] private TMP_Text _inputFieldPredictionPlaceHolder;
-        public string currentPrediction { get; private set; }
+        public ConsoleCommand currentPrediction { get; private set; }
         
         public Action<EventArgs> onPredictionStart;
+        public Action<ConsoleCommand> onPredictionComplete;
         public Action onPredictionEnd;
         
         
@@ -40,12 +41,7 @@ namespace DeveloperConsole
                 return;
             }
 
-            if (input.Count(' ') > 1)
-            {
-                if (HasAPrediction()) Clear();
-                return;
-            }
-            
+            if (input.Count(' ') >= 1) return;
             
             ReadOnlySpan<char> commandInput = input.AsSpan();
             
@@ -77,6 +73,8 @@ namespace DeveloperConsole
 
         private void PredictCommand(ReadOnlySpan<char> commandInput, ConsoleCommand consoleCommand)
         {
+            currentPrediction = consoleCommand;
+            
             int commandInputLength = commandInput.Length;
             string consoleCommandName = consoleCommand.name;
 
@@ -100,15 +98,20 @@ namespace DeveloperConsole
             {
                 _inputFieldPredictionPlaceHolder.text = $"<color=#00000000>{preWriteCommandName}</color>{nonWriteCommandName}";
             }
-
-            currentPrediction = consoleCommandName;
             
-            onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, command = consoleCommand});
+            if (newCommandInput == consoleCommandName)
+            {
+                onPredictionComplete?.Invoke(consoleCommand);
+            }
+            else
+            {
+                onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, command = currentPrediction});
+            }
         }
 
         private void Clear()
         {
-            currentPrediction = string.Empty;
+            currentPrediction = null;
             ClearInputFieldPrediction();
             
             onPredictionEnd?.Invoke();
@@ -119,6 +122,6 @@ namespace DeveloperConsole
             _inputFieldPredictionPlaceHolder.text = string.Empty;
         }
 
-        public bool HasAPrediction() => currentPrediction != string.Empty;
+        public bool HasAPrediction() => currentPrediction != null;
     }
 }
