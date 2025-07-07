@@ -62,6 +62,8 @@ namespace DeveloperConsole.Inputs
         
         private void RetrieveCommandsNameThatStartWith(ReadOnlySpan<char> commandInput)
         {
+            bool hasFindAnyStartsWith = false;
+            
             for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Count; i++)
             {
                 string commandName = ConsoleBehaviour.instance.commandsName[i];
@@ -70,7 +72,12 @@ namespace DeveloperConsole.Inputs
                 if (commandNameSpan.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
                 {
                     _commandsName.Add(ConsoleBehaviour.instance.commands[commandName]);
+                    hasFindAnyStartsWith = true;
                 }
+                // Because the commandsName is sorted,
+                // if we find any command that starts with the input and failed later,
+                // it means that we have already found all the commands that start with the input.
+                else if (hasFindAnyStartsWith) return;
             }
         }
         
