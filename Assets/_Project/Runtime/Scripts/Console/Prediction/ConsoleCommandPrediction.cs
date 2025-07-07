@@ -57,13 +57,14 @@ namespace DeveloperConsole
 
         private ConsoleCommand RetrieveCommandThatStartWith(ReadOnlySpan<char> commandInput)
         {
-            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
+            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Count; i++)
             {
-                var commandName = ConsoleBehaviour.instance.commandsName[i].AsSpan();
+                var commandName = ConsoleBehaviour.instance.commandsName[i];
+                var commandNameSpan = commandName.AsSpan();
                 
-                if (commandName.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
+                if (commandNameSpan.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return ConsoleBehaviour.instance.commands[commandName.ToString()];
+                    return ConsoleBehaviour.instance.commands[commandName];
                 }
             }
 

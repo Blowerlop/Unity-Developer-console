@@ -28,7 +28,7 @@ namespace DeveloperConsole.Inputs
 
         private void Start()
         {
-            _commandsName = new List<ConsoleCommand>(ConsoleBehaviour.instance.commandsName.Length / 4);
+            _commandsName = new List<ConsoleCommand>(ConsoleBehaviour.instance.commandsName.Count / 4);
         }
 
         private void OnEnable()
@@ -62,7 +62,7 @@ namespace DeveloperConsole.Inputs
         
         private void RetrieveCommandsNameThatStartWith(ReadOnlySpan<char> commandInput)
         {
-            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Length; i++)
+            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Count; i++)
             {
                 string commandName = ConsoleBehaviour.instance.commandsName[i];
                 var commandNameSpan = ConsoleBehaviour.instance.commandsName[i].AsSpan();

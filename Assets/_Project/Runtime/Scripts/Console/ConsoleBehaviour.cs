@@ -28,7 +28,7 @@ namespace DeveloperConsole
         [SerializeField, ColorUsage(false)] private Color _logErrorColor;
         
         public readonly Dictionary<string, ConsoleCommand> commands = new();
-        public string[] commandsName { get; private set; }
+        public List<string> commandsName { get; private set; }
         public List<string> commandHistory { get; private set; }
         private int _commandHistoryIndex;
         [NonSerialized] public int currentHistoryIndex = -1;
@@ -57,16 +57,8 @@ namespace DeveloperConsole
 
         private void Start()
         {
-            commandsName = new string[commands.Count];
-            int index = 0;
-            foreach (var kvp in commands)
-            {
-                commandsName[index] = kvp.Key;
-                index++;
-            }
+            InitializeCommandsName();
             
-            Array.Sort(commandsName);
-
             commandHistory = new List<string>(_maxCommandHistory);
             
             HideForced();
@@ -92,6 +84,37 @@ namespace DeveloperConsole
 
 
         #region Methods
+
+        #region Commands name
+
+        private void InitializeCommandsName()
+        {
+            commandsName = new List<string>(commands.Count);
+            
+            int index = 0;
+            foreach (var kvp in commands)
+            {
+                commandsName[index] = kvp.Key;
+                index++;
+            }
+            
+            commandsName.Sort(StringComparer.OrdinalIgnoreCase);
+        }
+
+        private void RegisterNewCommandName(ConsoleCommand consoleCommand)
+        {
+            commandsName.Add(consoleCommand.name);
+            
+            int index = commandsName.BinarySearch(consoleCommand.name, StringComparer.OrdinalIgnoreCase);
+            if (index < 0)
+            {
+                index = ~index;
+            }
+            
+            commandsName.Insert(index, consoleCommand.name);
+        }
+
+        #endregion
 
         #region Command Relative
 
@@ -225,9 +248,20 @@ namespace DeveloperConsole
 
         public void AddCommand(ConsoleCommand consoleCommand)
         {
-            commands.Add(consoleCommand.name, consoleCommand);
+            AddCommandWithoutNotify(consoleCommand);
+            OnCommandAdded(consoleCommand);
         }
 
+        private void AddCommandWithoutNotify(ConsoleCommand consoleCommand)
+        {
+            commands.Add(consoleCommand.name, consoleCommand);
+        }
+        
+        private void OnCommandAdded(ConsoleCommand consoleCommand)
+        {
+            RegisterNewCommandName(consoleCommand);
+        }
+        
         #endregion
 
         #region Utilities
@@ -409,7 +443,7 @@ namespace DeveloperConsole
                                 {
                                     for (int i = 0; i < commandAttribute.commandNames.Length; i++)
                                     {
-                                        AddCommand(new ConsoleCommand(commandAttribute.commandNames[i], commandAttribute.description, method));
+                                        AddCommandWithoutNotify(new ConsoleCommand(commandAttribute.commandNames[i], commandAttribute.description, method));
                                     }
                                     
                                 }
