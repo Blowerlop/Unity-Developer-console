@@ -67,7 +67,7 @@ namespace DeveloperConsole
             ConsoleCommand.Parameter[] parameters = _commandPrediction.currentPrediction.parameters;
             if (parameterCount > parameters.Length) return;
 
-            var parameterIndex = input.Find(StringExtensions.ESearchOrder.END, ' ');
+            var parameterIndex = input.Find(StringExtensions.ESearchOrder.End, ' ');
             if (parameterIndex == _parameterIndexInText) return;
             
             _parameterIndexInText = parameterIndex;

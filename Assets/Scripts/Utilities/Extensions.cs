@@ -27,8 +27,8 @@
         {
             public enum ESearchOrder
             {
-                START,
-                END
+                Start,
+                End
             }
             
             /// <summary>
@@ -37,7 +37,7 @@
             /// <returns>If found, return character index, otherwise return -1</returns>
             public static int Find(this string str, ESearchOrder searchOrder, char character)
             {
-                if (searchOrder == ESearchOrder.START)
+                if (searchOrder == ESearchOrder.Start)
                 {
                     return FindForward(str, character);
                 }
