@@ -91,11 +91,9 @@ namespace DeveloperConsole
         {
             commandsName = new List<string>(commands.Count);
             
-            int index = 0;
             foreach (var kvp in commands)
             {
-                commandsName[index] = kvp.Key;
-                index++;
+                commandsName.Add(kvp.Key);
             }
             
             commandsName.Sort(StringComparer.OrdinalIgnoreCase);
