@@ -406,7 +406,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 5.005005, y: 0}
-  m_SizeDelta: {x: 10.01001, y: 0}
+  m_SizeDelta: {x: 10.01001, y: 10.01}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &93317938027575556
 CanvasRenderer:
@@ -552,10 +552,13 @@ MonoBehaviour:
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 1
+  m_KeepTextSelectionVisible: 0
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
+  isAlert: 0
   m_InputValidator: {fileID: 0}
+  m_ShouldActivateOnSelect: 1
 --- !u!114 &6744393953279370905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,15 +778,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1249,15 +1254,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 3
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1387,85 +1394,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistantInputs:
-  - rid: 1228592689637490688
+  - rid: 1829442462563434583
   _nonPersistantInputs:
-  - rid: 1228592689637490689
-  - rid: 1228592689637490690
-  - rid: 1228592689637490691
-  - rid: 1228592689637490692
-  - rid: 1228592689718493184
+  - rid: 1829442462563434578
+  - rid: 1829442462563434579
+  - rid: 1829442462563434580
+  - rid: 1829442462563434581
+  - rid: 1829442462563434584
   references:
     version: 2
     RefIds:
-    - rid: 1228592689637490688
-      type: {class: ToggleInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+    - rid: 1829442462563434578
+      type: {class: CompleteCommandPredictionInputBehaviour, ns: DeveloperConsole, asm: Console}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: b301fa74-e7d0-49d3-b745-712e4b52225b
+          m_Id: da010487-b542-41ac-859e-fcf4c6b7080a
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: 
-            m_Id: ffbc7752-b10a-40f9-af9a-64dc591dd962
-            m_Path: <Keyboard>/backquote
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 0
-          m_Flags: 0
-    - rid: 1228592689637490689
-      type: {class: NavigateTroughPredictionInputBehaviour, ns: DeveloperConsole, asm: Console}
-      data:
-        _inputAction:
-          m_Name: Input
-          m_Type: 0
-          m_ExpectedControlType: 
-          m_Id: 2d71e5cf-2514-4f5b-b5d5-54f4a1d54fa1
-          m_Processors: 
-          m_Interactions: 
-          m_SingletonActionBindings:
-          - m_Name: 1D Axis
-            m_Id: 7a9ceab5-b95b-4d5e-a4f2-ae53bd829103
-            m_Path: 1DAxis
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 4
-          - m_Name: negative
-            m_Id: 041e63bf-9f94-40b1-9758-beff8b07fc84
-            m_Path: <Keyboard>/downArrow
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 8
-          - m_Name: positive
-            m_Id: 94f6d336-2eec-4433-915a-abc4b9443160
-            m_Path: <Keyboard>/upArrow
-            m_Interactions: 
-            m_Processors: 
-            m_Groups: 
-            m_Action: Input
-            m_Flags: 8
-          m_Flags: 0
-    - rid: 1228592689637490690
-      type: {class: CompleteCommandPredictionInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
-      data:
-        _inputAction:
-          m_Name: Input
-          m_Type: 0
-          m_ExpectedControlType: 
-          m_Id: d77face1-93b6-4f72-9f9c-4f202378a367
-          m_Processors: 
-          m_Interactions: 
-          m_SingletonActionBindings:
-          - m_Name: 
-            m_Id: 186b9910-a01b-44a4-a848-2e4129a1f5b5
+            m_Id: 4b9079b5-d368-4ab1-b0e6-1b90676a7725
             m_Path: <Keyboard>/tab
             m_Interactions: 
             m_Processors: 
@@ -1473,19 +1424,19 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 0
           m_Flags: 0
-    - rid: 1228592689637490691
-      type: {class: FastDeleteInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+    - rid: 1829442462563434579
+      type: {class: FastDeleteInputBehaviour, ns: DeveloperConsole, asm: Console}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: 31678768-2c41-4849-bbb3-436af66fdb2f
+          m_Id: 0249446f-23f6-444e-917c-4a10abd1d156
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: One Modifier
-            m_Id: 643c5e40-b8eb-41d9-b0c6-a5b0a7a1c715
+            m_Id: 6e29eb2e-74e8-4975-9869-26cd106c4035
             m_Path: OneModifier
             m_Interactions: 
             m_Processors: 
@@ -1493,7 +1444,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 4
           - m_Name: modifier
-            m_Id: 3cae9a93-788e-4828-b713-196fafd80442
+            m_Id: 13fb4455-99c3-4751-b585-25ed4a23bbe5
             m_Path: <Keyboard>/leftCtrl
             m_Interactions: 
             m_Processors: 
@@ -1501,7 +1452,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           - m_Name: binding
-            m_Id: 66b0da6e-e917-4046-ad40-534d6ef42eb6
+            m_Id: 7c37d489-30fc-4ada-948d-e567521720bd
             m_Path: <Keyboard>/backspace
             m_Interactions: 
             m_Processors: 
@@ -1509,19 +1460,19 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           m_Flags: 0
-    - rid: 1228592689637490692
-      type: {class: LogResizeInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+    - rid: 1829442462563434580
+      type: {class: LogResizeInputBehaviour, ns: DeveloperConsole, asm: Console}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: 7087e446-5f66-4755-95c5-d3c16ef57070
+          m_Id: 8e8fbcaa-0a6b-40d0-8282-6d32f0135eda
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: One Modifier
-            m_Id: c88b3786-ea91-4c2c-9eee-27ea74279028
+            m_Id: b6fd6a2d-194a-4334-b01e-e1d7916ca234
             m_Path: OneModifier
             m_Interactions: 
             m_Processors: 
@@ -1529,7 +1480,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 4
           - m_Name: modifier
-            m_Id: 53081631-7fdc-4512-a5ba-23723d7be37d
+            m_Id: 55267d02-c9fd-4184-9375-89d3a883370f
             m_Path: <Keyboard>/leftCtrl
             m_Interactions: 
             m_Processors: 
@@ -1537,7 +1488,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           - m_Name: binding
-            m_Id: 5ac1e6fe-396f-4d3a-8b74-e3ea8a6c39b0
+            m_Id: 6e8bee53-8850-4d24-9db9-d13dba7080dd
             m_Path: <Mouse>/scroll
             m_Interactions: 
             m_Processors: 
@@ -1546,19 +1497,19 @@ MonoBehaviour:
             m_Flags: 8
           m_Flags: 0
         _fontSizeRange: {x: 20, y: 60}
-    - rid: 1228592689718493184
-      type: {class: NavigateHistoryInputBehaviour, ns: DeveloperConsole.Inputs, asm: Console}
+    - rid: 1829442462563434581
+      type: {class: NavigateHistoryInputBehaviour, ns: DeveloperConsole, asm: Console}
       data:
         _inputAction:
           m_Name: Input
           m_Type: 0
           m_ExpectedControlType: 
-          m_Id: 60e7adc4-f8dc-4e3b-93ea-927545b5cb43
+          m_Id: 1982c950-6999-49d2-983a-1d881d475380
           m_Processors: 
           m_Interactions: 
           m_SingletonActionBindings:
           - m_Name: 1D Axis
-            m_Id: 3a6e46ce-ec34-40fe-acb7-ce2d25528b6d
+            m_Id: e3b3acc7-441c-4fc1-a8f5-bd586f609641
             m_Path: 1DAxis
             m_Interactions: 
             m_Processors: 
@@ -1566,7 +1517,7 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 4
           - m_Name: negative
-            m_Id: b4096ef4-2f8a-4c7e-9387-1c19d4f74d5c
+            m_Id: 8d02c2e9-e552-4c9f-bcb4-e447385d78ee
             m_Path: <Keyboard>/downArrow
             m_Interactions: 
             m_Processors: 
@@ -1574,7 +1525,63 @@ MonoBehaviour:
             m_Action: Input
             m_Flags: 8
           - m_Name: positive
-            m_Id: 85605459-efb4-45c4-934d-ba574c39e133
+            m_Id: af5c1481-efb3-42bb-8a7a-5446b3bab1d4
+            m_Path: <Keyboard>/upArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          m_Flags: 0
+    - rid: 1829442462563434583
+      type: {class: ToggleInputBehaviour, ns: DeveloperConsole, asm: Console}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 88454fcf-c51c-4b9a-8389-77addf086a53
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 
+            m_Id: ae18c36d-4002-4e26-8c49-282378a92131
+            m_Path: <Keyboard>/backquote
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 0
+          m_Flags: 0
+    - rid: 1829442462563434584
+      type: {class: NavigateTroughPredictionInputBehaviour, ns: DeveloperConsole, asm: Console}
+      data:
+        _inputAction:
+          m_Name: Input
+          m_Type: 0
+          m_ExpectedControlType: 
+          m_Id: 1982c950-6999-49d2-983a-1d881d475380
+          m_Processors: 
+          m_Interactions: 
+          m_SingletonActionBindings:
+          - m_Name: 1D Axis
+            m_Id: e3b3acc7-441c-4fc1-a8f5-bd586f609641
+            m_Path: 1DAxis
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 4
+          - m_Name: negative
+            m_Id: 8d02c2e9-e552-4c9f-bcb4-e447385d78ee
+            m_Path: <Keyboard>/downArrow
+            m_Interactions: 
+            m_Processors: 
+            m_Groups: 
+            m_Action: Input
+            m_Flags: 8
+          - m_Name: positive
+            m_Id: af5c1481-efb3-42bb-8a7a-5446b3bab1d4
             m_Path: <Keyboard>/upArrow
             m_Interactions: 
             m_Processors: 
@@ -2110,8 +2117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7abe077401845d541b11520e8358216a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 8090081948639838849}
+  _canvas: {fileID: 0}
   _selfTarget: 0
+  _target: {fileID: 8090081948639838849}
 --- !u!1 &5313251005957858790
 GameObject:
   m_ObjectHideFlags: 0
@@ -2764,10 +2772,13 @@ MonoBehaviour:
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 0
+  m_KeepTextSelectionVisible: 0
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 2
+  isAlert: 0
   m_InputValidator: {fileID: 0}
+  m_ShouldActivateOnSelect: 1
 --- !u!1 &6130870287038197799
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,15 +3327,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -3558,15 +3571,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
