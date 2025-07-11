@@ -26,6 +26,8 @@ namespace DeveloperConsole
         [SerializeField, ColorUsage(false)] private Color _logColor;
         [SerializeField, ColorUsage(false)] private Color _logWarningColor;
         [SerializeField, ColorUsage(false)] private Color _logErrorColor;
+        [SerializeField] private bool _logTimeStamp = true;
+        [SerializeField] private bool _logFrame =  true;
         [SerializeField, TextArea] private string _welcomeMessage;
         
         internal readonly Dictionary<string, ConsoleCommand> commands = new();
@@ -364,8 +366,20 @@ namespace DeveloperConsole
                     logColor = _logErrorColor;
                     break;
             }
+
+            string message;
+            if (_logTimeStamp || _logFrame)
+            {
+                string timeStamp = _logTimeStamp ? $"[{DateTime.Now:HH:mm:ss}]" : string.Empty;
+                string frame = _logFrame ? $"[{Time.frameCount}" : string.Empty;
+                message = $"{timeStamp} {frame} {condition}";
+            }
+            else
+            {
+                message = condition;
+            }
             
-            logInputField.text += $"<color=#{ColorUtility.ToHtmlStringRGB(logColor)}>{condition}</color>\n";
+            logInputField.text += $"<color=#{ColorUtility.ToHtmlStringRGB(logColor)}>{message}</color>\n";
 
             if (_currentNumberOfMessages >= _maxMessages)
             {
