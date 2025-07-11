@@ -1,0 +1,13 @@
+{
+	"author":
+	{
+		"name": "Blowerlop",
+		"url": "https://github.com/Blowerlop"
+	},
+	"name": "com.blowerlop.developerconsole",
+	"version": "1.0.0",
+	"displayName": "In-game Developer Console by Blowerlop",
+	"hideInEditor": true,
+	"documentationUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/README.md",
+	"licensesUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/LICENSE"
+}
