@@ -26,6 +26,7 @@ namespace DeveloperConsole
         [SerializeField, ColorUsage(false)] private Color _logColor;
         [SerializeField, ColorUsage(false)] private Color _logWarningColor;
         [SerializeField, ColorUsage(false)] private Color _logErrorColor;
+        [SerializeField, TextArea] private string _welcomeMessage;
         
         internal readonly Dictionary<string, ConsoleCommand> commands = new();
         internal List<string> CommandsName { get; private set; }
@@ -51,6 +52,7 @@ namespace DeveloperConsole
         protected override void Awake()
         {
             ClearLogs();
+            LogWelcomeMessage();
             Application.logMessageReceived += LogConsole;
             RetrieveCommandAttribute();
         }
@@ -333,6 +335,13 @@ namespace DeveloperConsole
         private void OnHideConsole()
         {
             onHide?.Invoke();
+        }
+
+        private void LogWelcomeMessage()
+        {
+            if (string.IsNullOrWhiteSpace(_welcomeMessage)) return;
+
+            LogConsole(_welcomeMessage, string.Empty, LogType.Log);
         }
         
         private void LogConsole(string condition, string stacktrace, LogType logType)

@@ -1377,6 +1377,7 @@ MonoBehaviour:
   _logColor: {r: 1, g: 1, b: 1, a: 0}
   _logWarningColor: {r: 1, g: 0.9702614, b: 0, a: 0}
   _logErrorColor: {r: 1, g: 0, b: 0, a: 0}
+  _welcomeMessage: Type 'help' to print all the available commands
   _canvas: {fileID: 332920929876778223}
   <logScrollRect>k__BackingField: {fileID: 2934192161782301022}
   <logInputField>k__BackingField: {fileID: 7075882152759586708}
