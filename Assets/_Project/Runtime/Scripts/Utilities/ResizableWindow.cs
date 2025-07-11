@@ -29,7 +29,7 @@ namespace DeveloperConsole
         [Header("Target")]
         private Canvas _canvas;
         [SerializeField] private bool _selfTarget;
-        [SerializeField] private RectTransform _target;
+        [SerializeField, HideIf(nameof(_selfTarget))] private RectTransform _target;
 
         [Header("Resizable Parameters")]
         [SerializeField] private HandlerType _handler;

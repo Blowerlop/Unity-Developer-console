@@ -8,8 +8,8 @@ namespace DeveloperConsole
         #region Variables
 
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private RectTransform _target;
         [SerializeField] private bool _selfTarget;
+        [SerializeField, HideIf(nameof(_selfTarget))] private RectTransform _target;
 
         #endregion
 
