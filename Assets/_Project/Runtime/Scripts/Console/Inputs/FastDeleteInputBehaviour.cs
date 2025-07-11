@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.InputSystem;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [Serializable]
     public class FastDeleteInputBehaviour : BaseInputBehaviour
@@ -9,17 +9,17 @@ namespace DeveloperConsole.Inputs
         protected override void Callback(InputAction.CallbackContext context)
         {
             int startWordPosition = 0;
-            for (int i = consoleBehaviourInstance.inputInputField.caretPosition - 1; i >= 0; i--)
+            for (int i = ConsoleBehaviourInstance.inputInputField.caretPosition - 1; i >= 0; i--)
             { 
-                if (consoleBehaviourInstance.inputInputField.text[i] == ' ')
+                if (ConsoleBehaviourInstance.inputInputField.text[i] == ' ')
                 {
                     startWordPosition = i;
                     break;
                 }
             }
             
-            consoleBehaviourInstance.SetTextOfInputInputField(consoleBehaviourInstance.inputInputField.text.Remove(
-                startWordPosition, consoleBehaviourInstance.inputInputField.caretPosition - startWordPosition));
+            ConsoleBehaviourInstance.SetTextOfInputInputField(ConsoleBehaviourInstance.inputInputField.text.Remove(
+                startWordPosition, ConsoleBehaviourInstance.inputInputField.caretPosition - startWordPosition));
         }
     }   
 }

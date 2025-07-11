@@ -1,6 +1,4 @@
 using System;
-using DeveloperConsole.Extensions;
-using DeveloperConsole.Inputs;
 using UnityEngine.InputSystem;
 
 namespace DeveloperConsole
@@ -16,17 +14,17 @@ namespace DeveloperConsole
         {
             base.OnInit();
             
-            _consoleCommandPrediction = consoleBehaviourInstance.GetComponentInChildren<ConsoleCommandPrediction>();
-            _consoleCommandAdditionalPrediction = consoleBehaviourInstance.GetComponentInChildren<ConsoleCommandAdditionalPrediction>();
+            _consoleCommandPrediction = ConsoleBehaviourInstance.GetComponentInChildren<ConsoleCommandPrediction>();
+            _consoleCommandAdditionalPrediction = ConsoleBehaviourInstance.GetComponentInChildren<ConsoleCommandAdditionalPrediction>();
         }
 
 
         protected override void Callback(InputAction.CallbackContext context)
         {
-            if (!consoleBehaviourInstance.isInputFieldFocus) return;
+            if (!ConsoleBehaviourInstance.IsInputFieldFocus) return;
             if (!_consoleCommandPrediction.HasAPrediction()) return;
 
-            var index = _consoleCommandAdditionalPrediction.index;
+            var index = _consoleCommandAdditionalPrediction.Index;
             index += (int)context.ReadValue<float>();
             // ReSharper disable once CompareOfFloatsByEqualityOperator
 

@@ -4,19 +4,47 @@ namespace DeveloperConsole
 {
     public static class Console
     {
+        #region Variables
+        
+        private static ConsoleBehaviour ConsoleBehaviourInstance => ConsoleBehaviour.instance;
+
+        public static bool IsConsoleEnabled => ConsoleBehaviourInstance.IsConsoleEnabled;
+        public static event Action onShow
+        {
+            add => ConsoleBehaviourInstance.onShow += value;
+            remove => ConsoleBehaviourInstance.onShow -= value;
+        }
+        public static event Action onHide
+        {
+            add => ConsoleBehaviourInstance.onHide += value;
+            remove => ConsoleBehaviourInstance.onHide -= value;
+        }
+
+        #endregion
+        
+        
+        #region Methods
+
         public static void AddCommand(ConsoleCommand command)
         {
-            ConsoleBehaviour.instance.AddCommand(command);
+            ConsoleBehaviourInstance.AddCommand(command);
         }
         
         public static void Show()
         {
-            ConsoleBehaviour.instance.Show();
+            ConsoleBehaviourInstance.Show();
         }
         
         public static void Hide()
         {
-            ConsoleBehaviour.instance.Hide();
+            ConsoleBehaviourInstance.Hide();
         }
+        
+        public static void ClearLogs()
+        {
+            ConsoleBehaviourInstance.ClearLogs();
+        }
+
+        #endregion
     }
 }

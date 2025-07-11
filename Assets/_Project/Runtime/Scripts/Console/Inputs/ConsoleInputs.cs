@@ -1,14 +1,19 @@
-﻿using DeveloperConsole.Inputs;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DeveloperConsole
 {
     public class ConsoleInputs : MonoBehaviour
     {
+        #region Variables
+
         [Tooltip("Inputs enable even when the console is disabled")]
         [SerializeReference, SubclassPicker] private BaseInputBehaviour[] _persistantInputs;
         [SerializeReference, SubclassPicker] private BaseInputBehaviour[] _nonPersistantInputs;
 
+        #endregion
+
+
+        #region Core Behaviours
 
         private void Start()
         {
@@ -25,8 +30,8 @@ namespace DeveloperConsole
                 input.RegisterListener();
             }
             
-            ConsoleBehaviour.instance.onShowEvent += OnConsoleShow;
-            ConsoleBehaviour.instance.onHideEvent += OnConsoleHide;
+            ConsoleBehaviour.instance.onShow += OnConsoleShow;
+            ConsoleBehaviour.instance.onHide += OnConsoleHide;
         }
         
         private void OnDestroy()
@@ -42,10 +47,15 @@ namespace DeveloperConsole
                 input.UnRegisterListener();
             }
             
-            ConsoleBehaviour.instance.onShowEvent -= OnConsoleShow;
-            ConsoleBehaviour.instance.onHideEvent -= OnConsoleHide;
+            ConsoleBehaviour.instance.onShow -= OnConsoleShow;
+            ConsoleBehaviour.instance.onHide -= OnConsoleHide;
         }
+
+        #endregion
+
         
+        #region Methods
+
         private void OnConsoleShow()
         {
             foreach (var input in _nonPersistantInputs)
@@ -61,5 +71,7 @@ namespace DeveloperConsole
                 input.Disable();
             }
         }
+
+        #endregion
     }
 }

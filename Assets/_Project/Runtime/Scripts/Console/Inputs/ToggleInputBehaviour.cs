@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.InputSystem;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [Serializable]
     public class ToggleInputBehaviour : BaseInputBehaviour
@@ -13,7 +13,7 @@ namespace DeveloperConsole.Inputs
         
         public void ToggleConsole()
         {
-            if (consoleBehaviourInstance.isConsoleEnabled) Console.Hide();
+            if (ConsoleBehaviourInstance.IsConsoleEnabled) Console.Hide();
             else Console.Show();
         }
     }

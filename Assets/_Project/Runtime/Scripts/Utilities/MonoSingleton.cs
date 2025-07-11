@@ -4,6 +4,8 @@ namespace DeveloperConsole
 {
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private bool _dontDestroyOnLoad = true;
         
         private static T _instance;
@@ -11,16 +13,21 @@ namespace DeveloperConsole
         {
             get
             {
-                #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (Application.isPlaying == false) return null;
-                #endif
+#endif
                 
-                if (_instance == null) _instance = FindObjectOfType<T>();
+                if (_instance == null) _instance = FindAnyObjectByType<T>();
                 
                 return _instance;
             }
         }
+
+        #endregion
+
         
+        #region Core Behaviours
+
         protected virtual void Awake()
         {
             if (_instance != null && _instance != this)
@@ -37,7 +44,12 @@ namespace DeveloperConsole
                 DontDestroyOnLoad(gameObject);
             }
         }
+
+        #endregion
+
         
+        #region Methods
+
 #if UNITY_EDITOR
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStaticVariables()
@@ -45,5 +57,7 @@ namespace DeveloperConsole
             _instance = null;
         }
 #endif
+
+        #endregion
     }
 }

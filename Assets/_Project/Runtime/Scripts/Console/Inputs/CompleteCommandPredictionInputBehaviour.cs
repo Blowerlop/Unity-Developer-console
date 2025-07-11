@@ -1,19 +1,25 @@
 ﻿using System;
 using UnityEngine.InputSystem;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [Serializable]
     public class CompleteCommandPredictionInputBehaviour : BaseInputBehaviour
     {
+        #region Variables
+
         private ConsoleCommandPrediction _commandPrediction;
 
+        #endregion
+
+
+        #region Methods
 
         protected override void OnInit()
         {
             base.OnInit();
 
-            _commandPrediction = consoleBehaviourInstance.GetComponent<ConsoleCommandPrediction>();
+            _commandPrediction = ConsoleBehaviourInstance.GetComponent<ConsoleCommandPrediction>();
             
             if (_commandPrediction == null)
             {
@@ -24,7 +30,7 @@ namespace DeveloperConsole.Inputs
 
         protected override void Callback(InputAction.CallbackContext context)
         {
-            if (!consoleBehaviourInstance.isInputFieldFocus) return;
+            if (!ConsoleBehaviourInstance.IsInputFieldFocus) return;
             if (!_commandPrediction.HasAPrediction()) return;
             
             AutoCompleteTextWithThePrediction();
@@ -32,7 +38,9 @@ namespace DeveloperConsole.Inputs
         
         private void AutoCompleteTextWithThePrediction()
         {
-            consoleBehaviourInstance.SetTextOfInputInputField(_commandPrediction.currentPrediction.name);
+            ConsoleBehaviourInstance.SetTextOfInputInputField(_commandPrediction.CurrentPrediction.Name);
         }
+
+        #endregion
     }
 }

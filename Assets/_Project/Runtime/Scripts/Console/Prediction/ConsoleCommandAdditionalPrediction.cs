@@ -7,19 +7,25 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [RequireComponent(typeof(ConsoleCommandPrediction))]
     public class ConsoleCommandAdditionalPrediction : MonoBehaviour
     {
+        #region Variables
+
         private ConsoleCommandPrediction _commandPrediction;
         
         private List<ConsoleCommand> _commandsName;
-        public int index { get; private set; } = -1;
+        public int Index { get; private set; } = -1;
         
         [SerializeField] private GameObject _commandButtonsContainer;
         [SerializeField] private Button _commandButtonTemplate;
 
+        #endregion
+
+
+        #region Core Behaviours
 
         private void Awake()
         {
@@ -28,7 +34,7 @@ namespace DeveloperConsole.Inputs
 
         private void Start()
         {
-            _commandsName = new List<ConsoleCommand>(ConsoleBehaviour.instance.commandsName.Count / 4);
+            _commandsName = new List<ConsoleCommand>(ConsoleBehaviour.instance.CommandsName.Count / 4);
         }
 
         private void OnEnable()
@@ -42,7 +48,11 @@ namespace DeveloperConsole.Inputs
             _commandPrediction.onPredictionStart -= OnStartPrediction;
             _commandPrediction.onPredictionEnd -= OnPredictionEnd;
         }
-        
+
+        #endregion
+
+
+        #region Methods
 
         private void OnStartPrediction(ConsoleCommandPrediction.EventArgs obj)
         {
@@ -52,7 +62,7 @@ namespace DeveloperConsole.Inputs
             if (_commandsName.Count == 0) return;
             
             CreateCommandButtons();
-            index = -1;
+            Index = -1;
         }
         
         private void OnPredictionEnd()
@@ -64,10 +74,10 @@ namespace DeveloperConsole.Inputs
         {
             bool hasFindAnyStartsWith = false;
             
-            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Count; i++)
+            for (int i = 0; i < ConsoleBehaviour.instance.CommandsName.Count; i++)
             {
-                string commandName = ConsoleBehaviour.instance.commandsName[i];
-                var commandNameSpan = ConsoleBehaviour.instance.commandsName[i].AsSpan();
+                string commandName = ConsoleBehaviour.instance.CommandsName[i];
+                var commandNameSpan = ConsoleBehaviour.instance.CommandsName[i].AsSpan();
                 
                 if (commandNameSpan.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -91,29 +101,29 @@ namespace DeveloperConsole.Inputs
 
         private void CreateCommandButton(ConsoleCommand consoleCommand)
         {
-            index++;
-            int localIndexCopy = index;
+            Index++;
+            int localIndexCopy = Index;
             
             var button = Instantiate(_commandButtonTemplate, _commandButtonsContainer.transform);
             
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(consoleCommand.name);
+            stringBuilder.Append(consoleCommand.Name);
             
-            for (int i = 0; i < consoleCommand.parameters.Length; i++)
+            for (int i = 0; i < consoleCommand.Parameters.Length; i++)
             {
-                if (consoleCommand.parameters[i].attributes.consoleParameterOutputAttribute == null) continue;
+                if (consoleCommand.Parameters[i].attributes.consoleParameterOutputAttribute == null) continue;
                 
                 stringBuilder.Append(" ");
-                stringBuilder.Append(consoleCommand.parameters[i].attributes.consoleParameterOutputAttribute.Resolve());
+                stringBuilder.Append(consoleCommand.Parameters[i].attributes.consoleParameterOutputAttribute.Resolve());
             }
             
             button.GetComponentInChildren<TMP_Text>().text = stringBuilder.ToString();
             button.onClick.AddListener(() =>
             {
                 _commandPrediction.ClearInputFieldPrediction();
-                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(consoleCommand.name);
+                ConsoleBehaviour.instance.SetTextOfInputInputFieldSilent(consoleCommand.Name);
                 ConsoleBehaviour.instance.FocusOnInputField();
-                index = localIndexCopy;
+                Index = localIndexCopy;
             });
         }
 
@@ -131,7 +141,9 @@ namespace DeveloperConsole.Inputs
         {
             _commandsName.Clear();
             _commandButtonsContainer.DestroyChildren();
-            index = -1;
+            Index = -1;
         }
+
+        #endregion
     }
 }

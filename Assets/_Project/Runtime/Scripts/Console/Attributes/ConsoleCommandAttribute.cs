@@ -8,20 +8,20 @@ namespace DeveloperConsole
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     public sealed class ConsoleCommandAttribute : Attribute
     {
-        public string[] commandNames { get; private set; }
-        public string description { get; private set; }
+        public string[] CommandNames { get; private set; }
+        public string Description { get; private set; }
         
 
         public ConsoleCommandAttribute(string commandName, string description)
         {
-            commandNames = new[] { commandName };
-            this.description = description;
+            CommandNames = new[] { commandName };
+            Description = description;
         }
 
         public ConsoleCommandAttribute(string[] commandNames, string description)
         {
-            this.commandNames = commandNames;
-            this.description = description;
+            CommandNames = commandNames;
+            Description = description;
         }
     }
 }

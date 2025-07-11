@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [Serializable]
     public class LogResizeInputBehaviour : BaseInputBehaviour
@@ -15,8 +15,8 @@ namespace DeveloperConsole.Inputs
         protected override void Callback(InputAction.CallbackContext context)
         {
             GameObject currentCurrentSelectedGameObject = EventSystem.current.currentSelectedGameObject;
-            if (currentCurrentSelectedGameObject == consoleBehaviourInstance.logScrollRect.gameObject ||
-                currentCurrentSelectedGameObject == consoleBehaviourInstance.logInputField.gameObject)
+            if (currentCurrentSelectedGameObject == ConsoleBehaviourInstance.logScrollRect.gameObject ||
+                currentCurrentSelectedGameObject == ConsoleBehaviourInstance.logInputField.gameObject)
             {
                 IncreaseOrDecreaseLogTextSize();
             }
@@ -24,7 +24,7 @@ namespace DeveloperConsole.Inputs
         
         private void IncreaseOrDecreaseLogTextSize()
         {
-            consoleBehaviourInstance.logInputField.pointSize = Mathf.Clamp(consoleBehaviourInstance.logInputField.pointSize + Input.mouseScrollDelta.y, _fontSizeRange.x,
+            ConsoleBehaviourInstance.logInputField.pointSize = Mathf.Clamp(ConsoleBehaviourInstance.logInputField.pointSize + Input.mouseScrollDelta.y, _fontSizeRange.x,
                 _fontSizeRange.y);
         }
     }

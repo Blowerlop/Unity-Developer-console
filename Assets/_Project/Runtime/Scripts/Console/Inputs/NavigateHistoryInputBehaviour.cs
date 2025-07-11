@@ -1,24 +1,30 @@
 ﻿using System;
 using UnityEngine.InputSystem;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [Serializable]
     public class NavigateHistoryInputBehaviour : BaseInputBehaviour
     {
+        #region Variables
+
         private ConsoleCommandPrediction _consoleCommandPrediction;
 
+        #endregion
+
+
+        #region Methods
 
         protected override void OnInit()
         {
             base.OnInit();
             
-            _consoleCommandPrediction = consoleBehaviourInstance.GetComponentInChildren<ConsoleCommandPrediction>();
+            _consoleCommandPrediction = ConsoleBehaviourInstance.GetComponentInChildren<ConsoleCommandPrediction>();
         }
 
         protected override void Callback(InputAction.CallbackContext context)
         {
-            if (!consoleBehaviourInstance.isInputFieldFocus) return;
+            if (!ConsoleBehaviourInstance.IsInputFieldFocus) return;
             if (_consoleCommandPrediction != null && _consoleCommandPrediction.HasAPrediction()) return;
             
             // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -34,34 +40,36 @@ namespace DeveloperConsole.Inputs
         
         private void GoToTheOlderInHistory()
         {
-            if (consoleBehaviourInstance.currentHistoryIndex + 1 >= consoleBehaviourInstance.commandHistory.Count)
+            if (ConsoleBehaviourInstance.currentHistoryIndex + 1 >= ConsoleBehaviourInstance.CommandHistory.Count)
             {
-                consoleBehaviourInstance.MoveCaretToTheEndOfTheText();
+                ConsoleBehaviourInstance.MoveCaretToTheEndOfTheText();
                 return;
             }
 
-            consoleBehaviourInstance.currentHistoryIndex++;
+            ConsoleBehaviourInstance.currentHistoryIndex++;
             
-            consoleBehaviourInstance.SetTextOfInputInputFieldSilent(consoleBehaviourInstance.commandHistory[consoleBehaviourInstance.currentHistoryIndex]);
+            ConsoleBehaviourInstance.SetTextOfInputInputFieldSilent(ConsoleBehaviourInstance.CommandHistory[ConsoleBehaviourInstance.currentHistoryIndex]);
         }
         
         private void GoToTheRecentInHistory()
         {
-            if (consoleBehaviourInstance.currentHistoryIndex <= -1)
+            if (ConsoleBehaviourInstance.currentHistoryIndex <= -1)
             {
                 return;
             }
             
-            if (consoleBehaviourInstance.currentHistoryIndex <= 0)
+            if (ConsoleBehaviourInstance.currentHistoryIndex <= 0)
             {
-                consoleBehaviourInstance.SetTextOfInputInputFieldSilent(string.Empty);
-                consoleBehaviourInstance.currentHistoryIndex = -1;
+                ConsoleBehaviourInstance.SetTextOfInputInputFieldSilent(string.Empty);
+                ConsoleBehaviourInstance.currentHistoryIndex = -1;
                 return;
             }
 
-            consoleBehaviourInstance.currentHistoryIndex--;
+            ConsoleBehaviourInstance.currentHistoryIndex--;
             
-            consoleBehaviourInstance.SetTextOfInputInputFieldSilent(consoleBehaviourInstance.commandHistory[consoleBehaviourInstance.currentHistoryIndex]);
+            ConsoleBehaviourInstance.SetTextOfInputInputFieldSilent(ConsoleBehaviourInstance.CommandHistory[ConsoleBehaviourInstance.currentHistoryIndex]);
         }
+
+        #endregion
     }
 }

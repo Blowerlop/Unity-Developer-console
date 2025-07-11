@@ -8,21 +8,31 @@ namespace DeveloperConsole
 {
     public class ConsoleCommandPrediction : MonoBehaviour
     {
+        #region Custom Types
+
         public struct EventArgs
         {
             public string commandInput;
             public ConsoleCommand command;
         }
-        
-        
+
+        #endregion
+
+
+        #region Variables
+
         [SerializeField] private TMP_Text _inputFieldPredictionPlaceHolder;
-        public ConsoleCommand currentPrediction { get; private set; }
+        public ConsoleCommand CurrentPrediction { get; private set; }
         
         public Action<EventArgs> onPredictionStart;
         public Action<ConsoleCommand> onPredictionComplete;
         public Action onPredictionEnd;
-        
-        
+
+        #endregion
+
+
+        #region Core Behaviours
+
         private void OnEnable()
         {
             ConsoleBehaviour.instance.inputInputField.onValueChanged.AddListener(Predict);
@@ -32,6 +42,11 @@ namespace DeveloperConsole
         {
             ConsoleBehaviour.instance.inputInputField.onValueChanged.RemoveListener(Predict);
         }
+
+        #endregion
+        
+
+        #region Methods
 
         private void Predict(string input)
         {
@@ -57,9 +72,9 @@ namespace DeveloperConsole
 
         private ConsoleCommand RetrieveCommandThatStartWith(ReadOnlySpan<char> commandInput)
         {
-            for (int i = 0; i < ConsoleBehaviour.instance.commandsName.Count; i++)
+            for (int i = 0; i < ConsoleBehaviour.instance.CommandsName.Count; i++)
             {
-                var commandName = ConsoleBehaviour.instance.commandsName[i];
+                var commandName = ConsoleBehaviour.instance.CommandsName[i];
                 var commandNameSpan = commandName.AsSpan();
                 
                 if (commandNameSpan.StartsWith(commandInput, StringComparison.InvariantCultureIgnoreCase))
@@ -74,10 +89,10 @@ namespace DeveloperConsole
 
         private void PredictCommand(ReadOnlySpan<char> commandInput, ConsoleCommand consoleCommand)
         {
-            currentPrediction = consoleCommand;
+            CurrentPrediction = consoleCommand;
             
             int commandInputLength = commandInput.Length;
-            string consoleCommandName = consoleCommand.name;
+            string consoleCommandName = consoleCommand.Name;
 
             string newCommandInput;
             // Correct user input to match the command name
@@ -106,13 +121,13 @@ namespace DeveloperConsole
             }
             else
             {
-                onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, command = currentPrediction});
+                onPredictionStart?.Invoke(new EventArgs {commandInput = newCommandInput, command = CurrentPrediction});
             }
         }
 
         private void Clear()
         {
-            currentPrediction = null;
+            CurrentPrediction = null;
             ClearInputFieldPrediction();
             
             onPredictionEnd?.Invoke();
@@ -123,6 +138,8 @@ namespace DeveloperConsole
             _inputFieldPredictionPlaceHolder.text = string.Empty;
         }
 
-        public bool HasAPrediction() => currentPrediction != null;
+        public bool HasAPrediction() => CurrentPrediction != null;
+
+        #endregion
     }
 }

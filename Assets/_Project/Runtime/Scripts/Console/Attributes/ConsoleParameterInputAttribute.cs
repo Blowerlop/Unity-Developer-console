@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Reflection;
-using UnityEngine;
 
 namespace DeveloperConsole
 {
     [AttributeUsage(AttributeTargets.Parameter)]
     public class ConsoleParameterInputAttribute : Attribute
     {
-        private readonly Type _correctType = typeof(string[]);
         private readonly Func<string[]> _func;    
         
         
+        /// <summary>
+        /// Find any member (static method, property or field) in the <b><paramref name="targetType"/></b> class that returns a string array.
+        /// </summary>
+        /// <param name="targetType">Class type where the <b><paramref name="target"/></b> is located</param>
+        /// <param name="target">Member name</param>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public ConsoleParameterInputAttribute(Type targetType, string target)
         {
             var memberInfo = targetType.GetMember(target, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)[0];
@@ -29,7 +34,8 @@ namespace DeveloperConsole
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-
+        
+        /// <param name="type">Enum type required</param>
         public ConsoleParameterInputAttribute(Type type)
         {
             GenerateFuncByType(out _func);
@@ -43,11 +49,7 @@ namespace DeveloperConsole
                 {
                     func = () => Enum.GetNames(type);
                 }
-                else
-                {
-                    Debug.LogError($"{type.Name} is not supported. Cannot generate function");
-                    func = null;
-                }
+                else throw new InvalidOperationException("{type.Name} is not an enum.");
             }
         }
 

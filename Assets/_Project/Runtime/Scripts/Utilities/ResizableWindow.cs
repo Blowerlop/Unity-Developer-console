@@ -16,8 +16,16 @@ namespace DeveloperConsole
         Top
     }
     
+    public struct Edges
+    {
+        public RectTransform.Edge? horizontalEdge;
+        public RectTransform.Edge? verticalEdge;
+    }
+    
     public class ResizableWindow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
     {
+        #region Variables
+
         [Header("Target")]
         private Canvas _canvas;
         [SerializeField] private bool _selfTarget;
@@ -38,7 +46,11 @@ namespace DeveloperConsole
         private static bool _dragged;
         private static ResizableWindow _draggedUser;
 
-        
+        #endregion
+
+
+        #region Core Behaviours
+
         private void Awake()
         {
             if (_selfTarget) _target = GetComponent<RectTransform>();
@@ -57,6 +69,11 @@ namespace DeveloperConsole
             _minimumDimensions = new Vector2 (0.1f * originalWidth, 0.1f * originalHeight);
             _maximumDimensions = new Vector2 (10f * originalWidth, 10f * originalHeight);
         }
+
+        #endregion
+
+
+        #region Methods
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -97,61 +114,74 @@ namespace DeveloperConsole
             _rectTransform.sizeDelta *= 100;
             _rectTransform.anchoredPosition *= 50;
             
-            RectTransform.Edge? horizontalEdge = null; 
-            RectTransform.Edge? verticalEdge = null;
-            
-            switch (_handler)
-            {
-                case HandlerType.TopRight:
-                    horizontalEdge = RectTransform.Edge.Left;
-                    verticalEdge = RectTransform.Edge.Bottom;
-                    break;
-                case HandlerType.Right:
-                    horizontalEdge = RectTransform.Edge.Left;
-                    break;
-                case HandlerType.BottomRight:
-                    horizontalEdge = RectTransform.Edge.Left;
-                    verticalEdge = RectTransform.Edge.Top;
-                    break;
-                case HandlerType.Bottom:
-                    verticalEdge = RectTransform.Edge.Top;
-                    break;
-                case HandlerType.BottomLeft:
-                    horizontalEdge = RectTransform.Edge.Right;
-                    verticalEdge = RectTransform.Edge.Top;
-                    break;
-                case HandlerType.Left:
-                    horizontalEdge = RectTransform.Edge.Right;
-                    break;
-                case HandlerType.TopLeft:
-                    horizontalEdge = RectTransform.Edge.Right;
-                    verticalEdge = RectTransform.Edge.Bottom;
-                    break;
-                case HandlerType.Top:
-                    verticalEdge = RectTransform.Edge.Bottom;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
+            Edges edges = GetEdgeByHandlerType();
             ResizeWindow();
             return;
 
 
             // --- Local methods ---
+            Edges GetEdgeByHandlerType()
+            {
+                Edges edges = default;
+                
+                switch (_handler)
+                {
+                    case HandlerType.TopRight:
+                        edges.horizontalEdge = RectTransform.Edge.Left;
+                        edges.verticalEdge = RectTransform.Edge.Bottom;
+                        break;
+                
+                    case HandlerType.Right:
+                        edges.horizontalEdge = RectTransform.Edge.Left;
+                        break;
+                
+                    case HandlerType.BottomRight:
+                        edges.horizontalEdge = RectTransform.Edge.Left;
+                        edges.verticalEdge = RectTransform.Edge.Top;
+                        break;
+                
+                    case HandlerType.Bottom:
+                        edges.verticalEdge = RectTransform.Edge.Top;
+                        break;
+                
+                    case HandlerType.BottomLeft:
+                        edges.horizontalEdge = RectTransform.Edge.Right;
+                        edges.verticalEdge = RectTransform.Edge.Top;
+                        break;
+                
+                    case HandlerType.Left:
+                        edges.horizontalEdge = RectTransform.Edge.Right;
+                        break;
+                
+                    case HandlerType.TopLeft:
+                        edges.horizontalEdge = RectTransform.Edge.Right;
+                        edges.verticalEdge = RectTransform.Edge.Bottom;
+                        break;
+                
+                    case HandlerType.Top:
+                        edges.verticalEdge = RectTransform.Edge.Bottom;
+                        break;
+                
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                return edges;
+            }
+            
             void ResizeWindow()
             {
                 Vector2 sizeDelta;
-                Vector2 scaledEventDataDelta = (eventData.delta / _canvas.scaleFactor);
+                Vector2 scaledEventDataDelta = eventData.delta / _canvas.scaleFactor;
                 
                 
-                if (horizontalEdge != null)
+                if (edges.horizontalEdge != null)
                 {
                     sizeDelta = _target.sizeDelta;
                     float newWidth;
                     float deltaPosX;
                     
-                    if (horizontalEdge == RectTransform.Edge.Right)
+                    if (edges.horizontalEdge == RectTransform.Edge.Right)
                     {
                         newWidth = sizeDelta.x - scaledEventDataDelta.x;
                         
@@ -182,13 +212,13 @@ namespace DeveloperConsole
                     _target.sizeDelta = new Vector2(newWidth, _target.sizeDelta.y);
                     _target.anchoredPosition += new Vector2(deltaPosX, 0);
                 }
-                if (verticalEdge != null)
+                if (edges.verticalEdge != null)
                 {
                     sizeDelta = _target.sizeDelta;
                     float newHeight;
                     float deltaPosY;
                     
-                    if (verticalEdge == RectTransform.Edge.Top)
+                    if (edges.verticalEdge == RectTransform.Edge.Top)
                     {
                         newHeight = sizeDelta.y - scaledEventDataDelta.y;
                         deltaPosY = -(newHeight - sizeDelta.y) * _target.pivot.y;
@@ -222,5 +252,7 @@ namespace DeveloperConsole
             _dragged = false;
         }
 #endif
+
+        #endregion
     }
 }

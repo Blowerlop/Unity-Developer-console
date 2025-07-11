@@ -16,8 +16,8 @@ namespace DeveloperConsole
         #region Variables
 
         // Console State
-        public bool isConsoleEnabled => _canvas.activeSelf;
-        public bool isInputFieldFocus => inputInputField.isFocused;
+        internal bool IsConsoleEnabled => _canvas.activeSelf;
+        internal bool IsInputFieldFocus => inputInputField.isFocused;
         private int _currentNumberOfMessages;
 
         [Header("Parameters")]
@@ -27,26 +27,26 @@ namespace DeveloperConsole
         [SerializeField, ColorUsage(false)] private Color _logWarningColor;
         [SerializeField, ColorUsage(false)] private Color _logErrorColor;
         
-        public readonly Dictionary<string, ConsoleCommand> commands = new();
-        public List<string> commandsName { get; private set; }
-        public List<string> commandHistory { get; private set; }
+        internal readonly Dictionary<string, ConsoleCommand> commands = new();
+        internal List<string> CommandsName { get; private set; }
+        internal List<string> CommandHistory { get; private set; }
         private int _commandHistoryIndex;
-        [NonSerialized] public int currentHistoryIndex = -1;
+        [NonSerialized] internal int currentHistoryIndex = -1;
         
         [Header("References")]
         [SerializeField] private GameObject _canvas;
-        [field: SerializeField] public ScrollRect logScrollRect { get; private set; }
-        [field: SerializeField] public TMP_InputField logInputField { get; private set; }
-        [field: SerializeField] public TMP_InputField inputInputField { get; private set; }
+        [field: SerializeField] internal ScrollRect logScrollRect { get; private set; }
+        [field: SerializeField] internal TMP_InputField logInputField { get; private set; }
+        [field: SerializeField] internal TMP_InputField inputInputField { get; private set; }
         
         // Events
-        public Action onShowEvent;
-        public Action onHideEvent;
+        internal Action onShow;
+        internal Action onHide;
 
         #endregion
         
         
-        #region Updates
+        #region Core Behaviours
 
         protected override void Awake()
         {
@@ -59,7 +59,7 @@ namespace DeveloperConsole
         {
             InitializeCommandsName();
             
-            commandHistory = new List<string>(_maxCommandHistory);
+            CommandHistory = new List<string>(_maxCommandHistory);
             
             HideForced();
             ClearInputField();
@@ -89,27 +89,27 @@ namespace DeveloperConsole
 
         private void InitializeCommandsName()
         {
-            commandsName = new List<string>(commands.Count);
+            CommandsName = new List<string>(commands.Count);
             
             foreach (var kvp in commands)
             {
-                commandsName.Add(kvp.Key);
+                CommandsName.Add(kvp.Key);
             }
             
-            commandsName.Sort(StringComparer.OrdinalIgnoreCase);
+            CommandsName.Sort(StringComparer.OrdinalIgnoreCase);
         }
 
         private void RegisterNewCommandName(ConsoleCommand consoleCommand)
         {
-            commandsName.Add(consoleCommand.name);
+            CommandsName.Add(consoleCommand.Name);
             
-            int index = commandsName.BinarySearch(consoleCommand.name, StringComparer.OrdinalIgnoreCase);
+            int index = CommandsName.BinarySearch(consoleCommand.Name, StringComparer.OrdinalIgnoreCase);
             if (index < 0)
             {
                 index = ~index;
             }
             
-            commandsName.Insert(index, consoleCommand.name);
+            CommandsName.Insert(index, consoleCommand.Name);
         }
 
         #endregion
@@ -130,12 +130,12 @@ namespace DeveloperConsole
             if (commands.TryGetValue(splitInput[0], out ConsoleCommand command))
             {
                 // Check if the command have the same number of parameters that the player input
-                object[] parameters = new object[command.parameters.Length];
+                object[] parameters = new object[command.Parameters.Length];
 
                 int commandsSplitInputLength = splitInput.Length - 1;
-                if (commandsSplitInputLength > command.parameters.Length || (commandsSplitInputLength < command.parameters.Length && commandsSplitInputLength < command.parameters.Length - command.parametersWithDefaultValue))
+                if (commandsSplitInputLength > command.Parameters.Length || (commandsSplitInputLength < command.Parameters.Length && commandsSplitInputLength < command.Parameters.Length - command.ParametersWithDefaultValue))
                 {
-                    int commandParametersLength = command.parameters.Length;
+                    int commandParametersLength = command.Parameters.Length;
 
                     switch (commandParametersLength)
                     {
@@ -184,11 +184,11 @@ namespace DeveloperConsole
             
             bool TryParseParameter(int i, out object parameterResult)
             {
-                Type parameterType = command.parameters[i].info.ParameterType;
+                Type parameterType = command.Parameters[i].info.ParameterType;
                 
                 if (i + 1 >= splitInput.Length)
                 {
-                    parameterResult = command.parameters[i].info.DefaultValue;
+                    parameterResult = command.Parameters[i].info.DefaultValue;
                     return true;
                 }
 
@@ -235,16 +235,16 @@ namespace DeveloperConsole
         {
             if (_commandHistoryIndex >= _maxCommandHistory)
             {
-                commandHistory.RemoveAt(_maxCommandHistory);
+                CommandHistory.RemoveAt(_maxCommandHistory);
             }
             
-            commandHistory.Insert(0, input);
+            CommandHistory.Insert(0, input);
             _commandHistoryIndex++;
 
             currentHistoryIndex = -1;
         }
 
-        public void AddCommand(ConsoleCommand consoleCommand)
+        internal void AddCommand(ConsoleCommand consoleCommand)
         {
             AddCommandWithoutNotify(consoleCommand);
             OnCommandAdded(consoleCommand);
@@ -252,7 +252,7 @@ namespace DeveloperConsole
 
         private void AddCommandWithoutNotify(ConsoleCommand consoleCommand)
         {
-            commands.Add(consoleCommand.name, consoleCommand);
+            commands.Add(consoleCommand.Name, consoleCommand);
         }
         
         private void OnCommandAdded(ConsoleCommand consoleCommand)
@@ -263,7 +263,7 @@ namespace DeveloperConsole
         #endregion
 
         #region Utilities
-        public void SetTextOfInputInputField(string text)
+        internal void SetTextOfInputInputField(string text)
         {
             if (string.Equals(inputInputField.text, text)) return;
             
@@ -271,7 +271,7 @@ namespace DeveloperConsole
             MoveCaretToTheEndOfTheText();
         }
         
-        public void SetTextOfInputInputFieldSilent(string text)
+        internal void SetTextOfInputInputFieldSilent(string text)
         {
             if (string.Equals(inputInputField.text, text)) return;
             
@@ -279,14 +279,14 @@ namespace DeveloperConsole
             MoveCaretToTheEndOfTheText();
         }
 
-        public void MoveCaretToTheEndOfTheText()
+        internal void MoveCaretToTheEndOfTheText()
         {
             inputInputField.MoveTextEnd(false);
         }
 
         private void ClearInputField() => inputInputField.text = (string.Empty);
         
-        public void FocusOnInputField()
+        internal void FocusOnInputField()
         {
             inputInputField.ActivateInputField();
             MoveCaretToTheEndOfTheText();
@@ -295,9 +295,9 @@ namespace DeveloperConsole
         
         #endregion
 
-        public void Show()
+        internal void Show()
         {
-            if (isConsoleEnabled) return;
+            if (IsConsoleEnabled) return;
 
             ShowForced();
         }
@@ -313,12 +313,12 @@ namespace DeveloperConsole
         {
             FocusOnInputField();
             
-            onShowEvent?.Invoke();
+            onShow?.Invoke();
         }
 
-        public void Hide()
+        internal void Hide()
         {
-            if (isConsoleEnabled == false) return;
+            if (IsConsoleEnabled == false) return;
             
             HideForced();
         }
@@ -332,7 +332,7 @@ namespace DeveloperConsole
 
         private void OnHideConsole()
         {
-            onHideEvent?.Invoke();
+            onHide?.Invoke();
         }
         
         private void LogConsole(string condition, string stacktrace, LogType logType)
@@ -368,7 +368,7 @@ namespace DeveloperConsole
             }
         }
         
-        public void ClearLogs()
+        internal void ClearLogs()
         {
             Debug.Log("Console cleared");
             logInputField.text = string.Empty;
@@ -439,9 +439,9 @@ namespace DeveloperConsole
                                 ConsoleCommandAttribute commandAttribute = (ConsoleCommandAttribute)attribute;
                                 if (commandAttribute != null)
                                 {
-                                    for (int i = 0; i < commandAttribute.commandNames.Length; i++)
+                                    for (int i = 0; i < commandAttribute.CommandNames.Length; i++)
                                     {
-                                        AddCommandWithoutNotify(new ConsoleCommand(commandAttribute.commandNames[i], commandAttribute.description, method));
+                                        AddCommandWithoutNotify(new ConsoleCommand(commandAttribute.CommandNames[i], commandAttribute.Description, method));
                                     }
                                     
                                 }

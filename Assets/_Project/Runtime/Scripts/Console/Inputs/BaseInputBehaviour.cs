@@ -2,16 +2,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DeveloperConsole.Inputs
+namespace DeveloperConsole
 {
     [Serializable]
     public abstract class BaseInputBehaviour
     {
-        [SerializeField] private InputAction _inputAction;
+        #region Variables
 
-        protected ConsoleBehaviour consoleBehaviourInstance => ConsoleBehaviour.instance;
-        
-        
+        [SerializeField] private InputAction _inputAction;
+        protected ConsoleBehaviour ConsoleBehaviourInstance => ConsoleBehaviour.instance;
+
+        #endregion
+
+
+        #region Core Behaviours
+
         public void Enable()
         {
             _inputAction.Enable();
@@ -29,7 +34,12 @@ namespace DeveloperConsole.Inputs
         public virtual void OnDisable()
         {
         }
+
+        #endregion
+
         
+        #region Methods
+
         public void RegisterListener()
         {
             _inputAction.performed += Callback;
@@ -50,5 +60,7 @@ namespace DeveloperConsole.Inputs
         }
 
         protected abstract void Callback(InputAction.CallbackContext context);
+
+        #endregion
     }
 }

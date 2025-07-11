@@ -1,39 +1,46 @@
+using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace DeveloperConsole
 {
+    [UsedImplicitly]
     public static class ConsoleNativeCommands
     {
-        private static ConsoleBehaviour instance => ConsoleBehaviour.instance;
+        private static ConsoleBehaviour Instance => ConsoleBehaviour.instance;
 
         
         [ConsoleCommand("enable", "Enable the console")]
+        [UsedImplicitly]
         private static void Show()
         {
-            instance.Show();
+            Instance.Show();
         }
         
         [ConsoleCommand("disable", "Disable the console")]
+        [UsedImplicitly]
         private static void HideConsole()
         {
-            instance.Hide();
+            Instance.Hide();
         }
         
         [ConsoleCommand("clear", "Wipe all the logs in the console")]
+        [UsedImplicitly]
         private static void ClearLogs()
         {
-            instance.ClearLogs();
+            Instance.ClearLogs();
         }
 
-        [ConsoleCommand(new string[] {"help", "commands"}, "Display all the commands")]
+        [ConsoleCommand(new[] {"help", "commands"}, "Display all the commands")]
+        [UsedImplicitly]
         private static void DisplayAllCommands()
         {
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.Append("Here the list of all available commands :\n");
 
-            foreach (var kvp in instance.commands)
+            foreach (var kvp in Instance.commands)
             {
                 stringBuilder.AppendLine(kvp.Value.ToString());
             }
@@ -42,18 +49,16 @@ namespace DeveloperConsole
         }
 
         [ConsoleCommand("find", "Find all commands related to search text")]
+        [UsedImplicitly]
         private static void Find(string search)
         {
             // await Awaitable.BackgroundThreadAsync();
             
             StringBuilder stringBuilder = new StringBuilder();
             
-            foreach (var kvp in instance.commands)
+            foreach (var kvp in Instance.commands.Where(kvp => kvp.Key.Contains(search) || kvp.Value.Description.Contains(search)))
             {
-                if (kvp.Key.Contains(search) || kvp.Value.description.Contains(search))
-                {
-                    stringBuilder.AppendLine(kvp.Value.ToString());
-                }
+                stringBuilder.AppendLine(kvp.Value.ToString());
             }
 
             // await Awaitable.MainThreadAsync();

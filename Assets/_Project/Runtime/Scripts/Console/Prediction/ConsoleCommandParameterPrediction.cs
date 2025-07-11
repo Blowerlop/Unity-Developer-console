@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using DeveloperConsole.Extensions;
 using TMPro;
 using UnityEngine;
@@ -11,14 +10,20 @@ namespace DeveloperConsole
     [RequireComponent(typeof(ConsoleCommandPrediction))]
     public class ConsoleCommandParameterPrediction : MonoBehaviour
     {
+        #region Variables
+
         private ConsoleCommandPrediction _commandPrediction;
         
         [SerializeField] private GameObject _commandButtonsContainer;
         [SerializeField] private Button _commandButtonTemplate;
         
         private int _parameterIndexInText;
-        
-        
+
+        #endregion
+
+
+        #region Core Behaviours
+
         private void Awake()
         {
             _commandPrediction = GetComponent<ConsoleCommandPrediction>();
@@ -37,7 +42,12 @@ namespace DeveloperConsole
             _commandPrediction.onPredictionComplete -= OnPredictionComplete;
             _commandPrediction.onPredictionEnd -= OnPredictionEnd;
         }
+
+        #endregion
+
         
+        #region Methods
+
         private void OnPredictionStart(ConsoleCommandPrediction.EventArgs obj)
         {
             ConsoleBehaviour.instance.inputInputField.onValueChanged.RemoveListener(Predict);
@@ -64,7 +74,7 @@ namespace DeveloperConsole
             var parameterCount = input.Count(' ');
             if (parameterCount == 0) return;
 
-            ConsoleCommand.Parameter[] parameters = _commandPrediction.currentPrediction.parameters;
+            ConsoleCommand.Parameter[] parameters = _commandPrediction.CurrentPrediction.Parameters;
             if (parameterCount > parameters.Length) return;
 
             var parameterIndex = input.Find(StringExtensions.ESearchOrder.End, ' ');
@@ -110,5 +120,7 @@ namespace DeveloperConsole
             _commandButtonsContainer.DestroyChildren();
             _parameterIndexInText = -1;
         }
+
+        #endregion
     }
 }
