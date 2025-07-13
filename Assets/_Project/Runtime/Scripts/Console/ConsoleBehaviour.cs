@@ -371,7 +371,7 @@ namespace DeveloperConsole
             if (_logTimeStamp || _logFrame)
             {
                 string timeStamp = _logTimeStamp ? $"[{DateTime.Now:HH:mm:ss}]" : string.Empty;
-                string frame = _logFrame ? $"[{Time.frameCount}" : string.Empty;
+                string frame = _logFrame ? $"[{Time.frameCount}]" : string.Empty;
                 message = $"{timeStamp} {frame} {condition}";
             }
             else
