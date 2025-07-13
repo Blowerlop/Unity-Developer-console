@@ -111,10 +111,18 @@ namespace DeveloperConsole
             
             for (int i = 0; i < consoleCommand.Parameters.Length; i++)
             {
-                if (consoleCommand.Parameters[i].attributes.consoleParameterOutputAttribute == null) continue;
-                
                 stringBuilder.Append(" ");
-                stringBuilder.Append(consoleCommand.Parameters[i].attributes.consoleParameterOutputAttribute.Resolve());
+
+                var consoleCommandParameter = consoleCommand.Parameters[i];
+                if (consoleCommandParameter.attributes.consoleParameterOutputAttribute != null)
+                {
+                    stringBuilder.Append(consoleCommandParameter.attributes.consoleParameterOutputAttribute.Resolve());
+                    stringBuilder.Append($"({consoleCommandParameter.info.Name}({consoleCommandParameter.info.ParameterType.Name}))");
+                }
+                else
+                {
+                    stringBuilder.Append($"{consoleCommandParameter.info.Name}({consoleCommandParameter.info.ParameterType.Name})");
+                }
             }
             
             button.GetComponentInChildren<TMP_Text>().text = stringBuilder.ToString();
