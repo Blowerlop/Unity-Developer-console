@@ -9,5 +9,11 @@
 	"displayName": "In-game Developer Console by Blowerlop",
 	"hideInEditor": true,
 	"documentationUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/README.md",
-	"licensesUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/LICENSE"
+	"licensesUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/LICENSE",
+	"samples": [
+        {
+            "displayName": "Examples",
+            "path": "_Project/Samples~/Examples"
+        }
+	]
 }
