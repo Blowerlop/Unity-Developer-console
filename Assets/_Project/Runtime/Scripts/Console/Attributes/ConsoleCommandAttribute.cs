@@ -6,6 +6,7 @@ namespace DeveloperConsole
     /// This Attribute only works on static method
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
+    [JetBrains.Annotations.MeansImplicitUse]
     public sealed class ConsoleCommandAttribute : Attribute
     {
         public string[] CommandNames { get; private set; }

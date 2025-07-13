@@ -1,39 +1,33 @@
 using System.Linq;
 using System.Text;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace DeveloperConsole
 {
-    [UsedImplicitly]
     public static class ConsoleNativeCommands
     {
         private static ConsoleBehaviour Instance => ConsoleBehaviour.instance;
 
         
         [ConsoleCommand("enable", "Enable the console")]
-        [UsedImplicitly]
         private static void Show()
         {
             Instance.Show();
         }
         
         [ConsoleCommand("disable", "Disable the console")]
-        [UsedImplicitly]
         private static void HideConsole()
         {
             Instance.Hide();
         }
         
         [ConsoleCommand("clear", "Wipe all the logs in the console")]
-        [UsedImplicitly]
         private static void ClearLogs()
         {
             Instance.ClearLogs();
         }
 
         [ConsoleCommand(new[] {"help", "commands"}, "Display all the commands")]
-        [UsedImplicitly]
         private static void DisplayAllCommands()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -49,7 +43,6 @@ namespace DeveloperConsole
         }
 
         [ConsoleCommand("find", "Find all commands related to search text")]
-        [UsedImplicitly]
         private static void Find(string search)
         {
             // await Awaitable.BackgroundThreadAsync();
