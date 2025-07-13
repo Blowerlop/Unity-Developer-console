@@ -83,9 +83,14 @@ namespace DeveloperConsole
             _parameterIndexInText = parameterIndex;
             
             ConsoleCommand.Parameter parameter = parameters[parameterCount - 1];
-            if (parameter.attributes.consoleParameterInput == null) return;
-            
-            CreateParameterButtons(parameter.attributes.consoleParameterInput.Resolve());
+            if (parameter.attributes.consoleParameterInput != null)
+            {
+                CreateParameterButtons(parameter.attributes.consoleParameterInput.Resolve());
+            }
+            else if (parameter.info.ParameterType.IsEnum)
+            {
+                CreateParameterButtons(Enum.GetNames(parameter.info.ParameterType));
+            }
         }
         
         private void CreateParameterButtons(string[] parametersValue)
