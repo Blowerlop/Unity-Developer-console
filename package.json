@@ -7,10 +7,11 @@
 	"name": "com.blowerlop.developerconsole",
 	"version": "1.0.0",
 	"displayName": "In-game Developer Console by Blowerlop",
-	"hideInEditor": true,
+	"description": "Developer Console for Unity with drag and drop integration.",
 	"documentationUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/README.md",
 	"licensesUrl": "https://github.com/Blowerlop/Unity-Developer-console/blob/main/LICENSE",
-	"samples": [
+	"samples": 
+	[
         {
             "displayName": "Examples",
             "path": "_Project/Samples~/Examples"
