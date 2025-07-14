@@ -9,13 +9,13 @@ namespace DeveloperConsole
         private static ConsoleBehaviour Instance => ConsoleBehaviour.instance;
 
         
-        [ConsoleCommand("enable", "Enable the console")]
+        [ConsoleCommand("show", "Show the console")]
         private static void Show()
         {
             Instance.Show();
         }
         
-        [ConsoleCommand("disable", "Disable the console")]
+        [ConsoleCommand("hide", "Hide the console")]
         private static void HideConsole()
         {
             Instance.Hide();
