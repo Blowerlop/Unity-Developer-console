@@ -7,8 +7,7 @@ Developer Console for Unity with drag and drop integration.
 This asset is no longer in active development, so use at your own risk.
 
 # Get started
-1. Import via the Unity package manager (Window>Package Manager).  
-Git URL: https://github.com/Blowerlop/Unity-Developer-console.git
+1. Download the .zip project and drag and drop it into your project.
 2. Drag & drop the Console prefab into your scene.
 3. Add the attribute ``[ConsoleCommand()]`` attribute to your static methods like below. See [Examples.cs](https://github.com/Blowerlop/Unity-Developer-console/blob/main/Assets/_Project/Samples~/Examples/Scripts/Example.cs) for all examples.
 4. In game, press the tilde key ``~`` to toggle the console window.
