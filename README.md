@@ -14,6 +14,17 @@ Git URL: https://github.com/Blowerlop/Unity-Developer-console.git
 4. In game, press the tilde key ``~`` to toggle the console window.
 
 # Features
+- Inputs prediction
+- Inputs parameters prediction
+- Inputs parameters resolving (display the value of the current method parameter during prediction)
+- Outputs parameters resolving (display the possible values of the current method parameter during prediction)
+- Call static, non-static methods (both public and private)
+- No parameter and optional parameter(s) support
+- Struct parameters support
+- Multi parameters support
+- Domain/Scene reload support
+- Draggable & resizable window
+- Log Unity messages into the console
 
 # Native commands
 - ``show`` - Show the console
